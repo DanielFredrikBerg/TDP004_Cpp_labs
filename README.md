@@ -1,2 +1,1 @@
-någonting
-lite text till
+Här kommer det bli en merge konflikt!
