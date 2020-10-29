@@ -11,7 +11,8 @@ Variables:
 int main()
 {
    int i{3};
-   floatf{1.2};
-   doubled{2.3};
-   charc{'d'};
+   float f{1.2};
+   double d{2.3};
+   char c{'d'};
 }
+Variables can never change type. Most variables can be written to cout.
