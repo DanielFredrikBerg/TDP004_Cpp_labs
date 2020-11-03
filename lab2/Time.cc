@@ -30,7 +30,7 @@ bool Time::operator==(Time const& time) const
     && second == time.get_second();
 }
 
-// TODO
+
 string Time::to_string(bool const& p) const
 {
   string end = "";
@@ -40,8 +40,11 @@ string Time::to_string(bool const& p) const
   {
     if (temp_hour >= 12)
     {
-      temp_hour -= 12;
       end += " pm";
+      if (temp_hour > 12)
+      {
+	temp_hour -= 12;
+      }
     }
     else
     {
@@ -69,12 +72,21 @@ string Time::to_string(bool const& p) const
 	// TODO
 Time Time::operator+(Time const& time)
 {
-  return *this; // TODO
+  hour += time.hour;
+  minute += time.minute;
+  second += time.second;
+  adjust_time();
+  return *this;
 }
 
 // TODO
 Time Time::operator-(Time const& time)
 {
+  second += 24 * 60 * 60;
+  second -= 60 * 60 * time.hour;
+  second -= 60 * time.minute;
+  second -= time.second;
+  adjust_time();    
   return *this; // TODO
 }
 
@@ -82,6 +94,7 @@ Time Time::operator-(Time const& time)
 Time& Time::operator++()
 {
   second++;
+  adjust_time();
   return *this;
 }
 
@@ -114,20 +127,28 @@ int Time::get_second() const {return second;}
 
 void Time::adjust_time() // kasst namn ?
 {
-  if (second >= 60) 
-    {
-      minute += second / 60;
-      second %= 60;
-    }
+  minute += second / 60;
+  second %= 60;
   
-  if (minute >= 60)
-    {
-      hour += minute / 60;
-      minute %= 60;
-    }
+  if (second < 0)
+  {
+    minute--;
+    second += 60;
+  }
+
+  hour += minute / 60;
+  minute %= 60;
   
-  if (hour >= 24)
-    {
-      hour %= 24;
-    }
+  if (minute < 0)
+  {
+    hour--;
+    minute += 60;
+  }
+  
+  hour %= 24;
+  
+  if (hour < 0)
+  {
+    hour += 24;
+  }
 }
