@@ -23,6 +23,8 @@ TEST_CASE("Time can be validated", "[is_valid]")
 TEST_CASE("Check time_adjuster", "[adjust_time]")
 {
   Time t1{240, 80, 20};
-
-  REQUIRE(t1.adjust_time().is_valid());
+  t1.adjust_time();
+  REQUIRE(t1.get_hour() == 1);
+  REQUIRE(t1.get_minute() == 20);
+  REQUIRE(t1.get_second() == 20);
 }

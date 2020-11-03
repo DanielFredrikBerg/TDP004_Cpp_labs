@@ -24,10 +24,46 @@ bool Time::is_valid() const
 	  && second >= 0 && second <= 60; 
 }
 
-// TODO
-string Time::to_string() const
+bool Time::operator==(Time const& time) const
 {
-  return ""; // TODO
+  return hour == time.get_hour() && minute == time.get_minute()
+    && second == time.get_second();
+}
+
+// TODO
+string Time::to_string(bool const& p) const
+{
+  string end = "";
+  string str = "";
+  int temp_hour = hour;
+  if (p)
+  {
+    if (temp_hour >= 12)
+    {
+      temp_hour -= 12;
+      end += " pm";
+    }
+    else
+    {
+      end += " am";
+    }
+  }
+  if (temp_hour < 10)
+  {
+    str += "0";
+  }
+  str += std::to_string(temp_hour) + ":";
+  if (minute < 10)
+  {
+    str += "0";
+  }
+  str += std::to_string(minute) + ":";
+  if (second < 10)
+  {
+    str += "0";
+  }
+  str += std::to_string(second);
+  return str + end;
 }
 
 	// TODO
@@ -71,6 +107,10 @@ Time Time::operator--(int) // dummy parameter
   --*this;
   return temp;
 }
+
+int Time::get_hour() const {return hour;}
+int Time::get_minute() const {return minute;}
+int Time::get_second() const {return second;}
 
 void Time::adjust_time() // kasst namn ?
 {

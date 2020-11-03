@@ -15,16 +15,16 @@ public:
   Time(Time const&, int const);
 
   bool is_valid() const;
-  bool operator==(Time const&);
-  bool operator!=(Time const&):
-  bool operator>(Time const&);
-  bool operator>=(Time const&);
-  bool operator<(Time const&);
-  bool operator<=(Time const&);
+  bool operator==(Time const&) const;
+  bool operator!=(Time const&) const;
+  bool operator>(Time const&) const;
+  bool operator>=(Time const&) const;
+  bool operator<(Time const&) const;
+  bool operator<=(Time const&) const;
   
   void adjust_time();
   
-  std::string to_string() const;
+  std::string to_string(bool const&) const;
   
   Time operator+(Time const&);
   Time operator-(Time const&);
@@ -35,6 +35,10 @@ public:
   Time& operator--();
   Time operator--(int);
 
+  int get_hour() const;
+  int get_minute() const;
+  int get_second() const;
+  
 private:
   int hour;
   int minute;
