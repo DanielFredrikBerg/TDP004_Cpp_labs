@@ -116,3 +116,43 @@ TEST_CASE("Checking postfix -- operator", "[operator--]")
   REQUIRE(t1.get_minute() == 59);
   REQUIRE(t1.get_second() == 58);
 }
+
+TEST_CASE("Checking >= operator", "[operator>=]")
+{
+  
+}
+
+TEST_CASE("Checking <= operator", "[operator<=]")
+{
+  
+}
+
+TEST_CASE("Checking > operator", "[operator>]")
+{
+  
+}
+
+TEST_CASE("Checking < operator", "[operator<]")
+{
+  
+}
+
+TEST_CASE("Checking == operator", "[operator==]")
+{
+  
+}
+
+TEST_CASE("Checking != operator", "[operator!=]")
+{
+  
+}
+
+TEST_CASE("Checking << operator", "[operator<<]")
+{
+  
+}
+
+TEST_CASE("Checking >> operator", "[operator>>]")
+{
+  
+}

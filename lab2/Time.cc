@@ -25,7 +25,7 @@ bool Time::is_valid() const
 {
   return hour >= 0 && hour <= 23 
 	  && minute >= 0 && minute <= 60 
-	  && second >= 0 && second <= 60; 
+	  && second >= 0 && second <= 60;  
 }
 
 bool Time::operator==(Time const& time) const
@@ -35,12 +35,12 @@ bool Time::operator==(Time const& time) const
 }
 
 
-string Time::to_string(bool const& p) const
+string Time::to_string(bool const& am_pm) const
 {
-  string end = "";
-  string str = "";
-  int temp_hour = hour;
-  if (p)
+  string end{""};
+  string str{""};
+  int temp_hour{hour};
+  if (am_pm)
   {
     if (temp_hour >= 12)
     {
