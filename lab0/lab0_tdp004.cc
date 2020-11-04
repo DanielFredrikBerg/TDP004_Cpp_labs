@@ -3,14 +3,25 @@
 
 using namespace std;
 
+/* Komplettering:
+ * När jag testar ert program så blir det ett fel vid 
+ * "Skriv in en hel rad med text". Efter att jag har 
+ * skrivit in texten så krävs ett extra enter för att
+ * få programmet att fortsätta.
+*/
+
+// Komplettering: 2-6.
+// Kommentar: 1-4, se rad 91.
 
 
 int main()
 {
   int integer{};
-  char chr{};
-  string str{};
-  double db{};
+  char char_var{};
+  string string_var{};
+  // Komplettering: Dålig namngivning.
+  double double_num{};
+  
   
   cout << "Skriv in ett heltal: ";
   cin >> integer;
@@ -31,53 +42,55 @@ int main()
   cin.ignore(100, '\n');
 
   cout << "\nSkriv in ett flyttal: ";
-  cin >> db;
-  cout << "Du skrev in flyttalet: " << fixed << setprecision(3) << db << endl;
+  cin >> double_num;
+  cout << "Du skrev in flyttalet: " << fixed << setprecision(3) << double_num << endl;
   cin.ignore(100, '\n');
 
   cout << "\nSkriv in ett heltal och ett flyttal: ";
-  cin >> integer >> db;
+  cin >> integer >> double_num;
   cout << "Du skrev in heltalet:" << setw(9) << integer
-       << "\nDu skrev in flyttalet:" << setw(8) << db << endl;
+       << "\nDu skrev in flyttalet:" << setw(8) << double_num << endl;
   cin.ignore(100, '\n');
 
   cout << "\nSkriv in ett flyttal och ett heltal: ";
-  cin >> db >> integer;
+  cin >> double_num >> integer;
   cout << "Du skrev in heltalet:" << setw(9) << setfill('-') << integer
-       << "\nDu skrev in flyttalet:" << setw(8) << db << endl;
+       << "\nDu skrev in flyttalet:" << setw(8) << double_num << endl;
   cin.ignore(100, '\n');
 
   cout << "\nSkriv in ett tecken: ";
-  cin >> chr;
-  cout << "Du skrev in tecknet: " << chr << endl;
+  cin >> char_var;
+  cout << "Du skrev in tecknet: " << char_var << endl;
   cin.ignore(100, '\n');
     
   cout << "\nSkriv in en sträng: ";
-  cin >> str;
-  cout << "Strängen '" << str << "' har " << str.size() << " tecken." << endl;
+  cin >> string_var;
+  cout << "Strängen '" << string_var << "' har " << string_var.size() << " tecken." << endl;
   cin.ignore(100, '\n');
 
   cout << "\nSkriv in ett heltal och en sträng: ";
-  cin >> integer >> str;
-  cout << "Du skrev in talet |" << integer << "| och strängen |" << str
+  cin >> integer >> string_var;
+  cout << "Du skrev in talet |" << integer << "| och strängen |" << string_var
        << "|." << endl;
   cin.ignore(100, '\n');
 
   cout << "\nSkriv in en sträng och ett flyttal: ";
-  cin >> str >> db;
-  cout << "Du skrev in \"" << db << "\" och \"" << str << "\"." << endl;
+  cin >> string_var >> double_num;
+  cout << "Du skrev in \"" << double_num << "\" och \"" << string_var << "\"." << endl;
   cin.ignore(100, '\n');
 
   cout << "\nSkriv in en hel rad med text: ";
-  getline(cin, str);
-  cout << "Du skrev in textraden: '" << str << "'";
-  cin.ignore(100, '\n');
-
+  getline(cin, string_var);
+  cout << "Du skrev in textraden: '" << string_var << "'" << endl;
+  
   cout << "\nSkriv in en textrad som slutar med ett negativt heltal: ";
-  getline(cin, str, '-');
+  getline(cin, string_var, '-');
   cin >> integer;
   integer *= -1;
-  cout << "Du skrev in textraden: '" << str << "' och heltalet '" << integer << "'"
-       << endl;
+  // Kommentar: 1-4
+  cout << "Du skrev in textraden: '" << string_var << "' och heltalet '"
+       << integer << "'" << endl;
+
+  return 0;
     
 }
