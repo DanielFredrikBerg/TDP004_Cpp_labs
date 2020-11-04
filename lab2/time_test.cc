@@ -37,4 +37,82 @@ TEST_CASE("Check to_string", "[to_string]")
   REQUIRE(t5.to_string(true) == "12:00:00 pm");
 }
 
+TEST_CASE("Checking + operator", "[operator+]")
+{
+  Time t1{00, 00, 30};
+  Time t2{00, 00, 20};
+  Time t3{23, 59, 59};
+  t3 + t2;
+  REQUIRE(t3.get_hour() == 0);
+  REQUIRE(t3.get_minute() == 0);
+  REQUIRE(t3.get_second() == 19);
+  REQUIRE((t1 + t2).get_second() == 50);
+}
 
+TEST_CASE("Checking - operator", "[operator-]")
+{
+  Time t1{01, 00, 00};
+  Time t2{00, 40, 00};
+  Time t3{23, 40, 20};
+  Time t4{24, 50, 30};
+  t1 - t2;
+  t3 - t4;
+  REQUIRE(t1.get_hour() == 0);
+  REQUIRE(t1.get_minute() == 20);
+  REQUIRE(t1.get_second() == 00);
+  REQUIRE(t3.get_hour() == 22);
+  REQUIRE(t3.get_minute() == 49);
+  REQUIRE(t3.get_second() == 50);
+}
+
+TEST_CASE("Checking prefix ++ operator", "[operator++]")
+{
+  Time t1{23, 59, 59};
+  ++t1;
+  REQUIRE(t1.get_hour() == 0);
+  REQUIRE(t1.get_minute() == 0);
+  REQUIRE(t1.get_second() == 0);
+  ++t1;
+  REQUIRE(t1.get_hour() == 0);
+  REQUIRE(t1.get_minute() == 0);
+  REQUIRE(t1.get_second() == 1);
+}
+
+TEST_CASE("Checking postfix ++ operator", "[operator++]")
+{
+  Time t1{23, 59, 59};
+  Time t2{t1++};
+  REQUIRE(t2.get_hour() == 23);
+  REQUIRE(t2.get_minute() == 59);
+  REQUIRE(t2.get_second() == 59);
+  t1++;
+  REQUIRE(t1.get_hour() == 0);
+  REQUIRE(t1.get_minute() == 0);
+  REQUIRE(t1.get_second() == 1);
+}
+
+TEST_CASE("Checking prefix -- operator", "[operator--]")
+{
+  Time t1{00, 00, 00};
+  --t1;
+  REQUIRE(t1.get_hour() == 23);
+  REQUIRE(t1.get_minute() == 59);
+  REQUIRE(t1.get_second() == 59);
+  --t1;
+  REQUIRE(t1.get_hour() == 23);
+  REQUIRE(t1.get_minute() == 59);
+  REQUIRE(t1.get_second() == 58);
+}
+
+TEST_CASE("Checking postfix -- operator", "[operator--]")
+{
+  Time t1{00, 00, 00};
+  Time t2{t1--};
+  REQUIRE(t2.get_hour() == 00);
+  REQUIRE(t2.get_minute() == 00);
+  REQUIRE(t2.get_second() == 00);
+  t1--;
+  REQUIRE(t1.get_hour() == 23);
+  REQUIRE(t1.get_minute() == 59);
+  REQUIRE(t1.get_second() == 58);
+}

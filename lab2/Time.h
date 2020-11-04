@@ -13,6 +13,7 @@ public:
   Time();
   Time(int const hour, int const minute, int const second);
   Time(Time const& time, int const second);
+  Time(Time const& time);
 
   bool is_valid() const;
   bool operator==(Time const& time) const;
@@ -45,7 +46,7 @@ private:
   int second;
 
   void set_time(int second);
-  void time_to_sec(Time const& time) const; 
+  int time_to_sec(Time const& time) const; 
 };
 
 // end of headerguard

@@ -17,6 +17,10 @@ Time::Time(Time const& t1, int const s)
 : hour{t1.hour}, minute{t1.minute}, second{t1.second + s}
 {}
 
+Time::Time(Time const& t1)
+: hour{t1.hour}, minute{t1.minute}, second{t1.second}
+{}
+
 bool Time::is_valid() const
 {
   return hour >= 0 && hour <= 23 
@@ -69,37 +73,29 @@ string Time::to_string(bool const& p) const
   return str + end;
 }
 
-	// TODO
+
 Time Time::operator+(Time const& time)
 {
-  hour += time.hour;
-  minute += time.minute;
-  second += time.second;
-  adjust_time();
+  set_time(time_to_sec(*this) + time_to_sec(time));
   return *this;
 }
 
-// TODO
+
 Time Time::operator-(Time const& time)
 {
-  second += 24 * 60 * 60;
-  second -= 60 * 60 * time.hour;
-  second -= 60 * time.minute;
-  second -= time.second;
-  adjust_time();    
-  return *this; // TODO
+  set_time(time_to_sec(*this) - time_to_sec(time));
+  return *this; 
 }
 
 // prefix ++ operator
 Time& Time::operator++()
 {
-  second++;
-  adjust_time();
+  set_time(time_to_sec(*this) + 1);
   return *this;
 }
 
 // postfix ++ operator
-Time Time::operator++(int) // dummy parameter
+Time Time::operator++(int) 
 {
   Time temp{*this};
   ++*this;
@@ -109,7 +105,7 @@ Time Time::operator++(int) // dummy parameter
 // prefix -- operator
 Time& Time::operator--()
 {
-  second--;
+  set_time(time_to_sec(*this) - 1);
   return *this;
 }
 
