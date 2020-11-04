@@ -20,23 +20,6 @@ TEST_CASE("Time can be validated", "[is_valid]")
 	REQUIRE(!t3.is_valid());	
 }
 
-TEST_CASE("Check time_adjuster", "[adjust_time]")
-{
-  Time t1{240, 80, 20};
-  Time t2{-245, 20, 10};
-  Time t3{-240, -240, -1};
-  t1.adjust_time();
-  t2.adjust_time();
-  t3.adjust_time();
-  REQUIRE(t1.get_hour() == 1);
-  REQUIRE(t1.get_minute() == 20);
-  REQUIRE(t1.get_second() == 20);
-  REQUIRE(t2.get_hour() == 19);
-  REQUIRE(t3.get_hour() == 19);
-  REQUIRE(t3.get_minute() == 59);
-  REQUIRE(t3.get_second() == 59);
-}
-
 TEST_CASE("Check to_string", "[to_string]")
 {
   Time t1{12, 20, 59};

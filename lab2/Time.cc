@@ -101,7 +101,7 @@ Time& Time::operator++()
 // postfix ++ operator
 Time Time::operator++(int) // dummy parameter
 {
-  Time temp = *this;
+  Time temp{*this};
   ++*this;
   return temp;
 }
@@ -116,7 +116,7 @@ Time& Time::operator--()
 // postfix -- operator
 Time Time::operator--(int) // dummy parameter
 {
-  Time temp = *this;
+  Time temp{*this};
   --*this;
   return temp;
 }
@@ -124,6 +124,30 @@ Time Time::operator--(int) // dummy parameter
 int Time::get_hour() const {return hour;}
 int Time::get_minute() const {return minute;}
 int Time::get_second() const {return second;}
+
+int Time::time_to_sec(Time const& time) const
+{
+  return time.hour * 3600 + time.minute * 60 + time.second; 
+}
+
+void Time::set_time(int total_seconds)
+{
+  int sec_per_min{60};
+  int sec_per_hour{sec_per_min * 60};
+  int sec_per_day{sec_per_hour * 24};
+  if (total_seconds < 0)
+  {
+    total_seconds += (1 + total_seconds / sec_per_day) * sec_per_day;
+  }
+  if (total_seconds >= sec_per_day)
+  {
+    total_seconds %= sec_per_day;
+  }
+
+  hour = total_seconds / sec_per_hour;
+  minute = (total_seconds - hour * sec_per_hour) / sec_per_min;
+  second = total_seconds - sec_per_hour * hour - sec_per_min * minute;
+}
 
 void Time::adjust_time() // kasst namn ?
 {
