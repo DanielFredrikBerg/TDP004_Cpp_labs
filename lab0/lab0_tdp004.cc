@@ -43,7 +43,8 @@ int main()
 
   cout << "\nSkriv in ett flyttal: ";
   cin >> double_num;
-  cout << "Du skrev in flyttalet: " << fixed << setprecision(3) << double_num << endl;
+  cout << "Du skrev in flyttalet: " << fixed << setprecision(3)
+       << double_num << endl;
   cin.ignore(100, '\n');
 
   cout << "\nSkriv in ett heltal och ett flyttal: ";
@@ -65,7 +66,8 @@ int main()
     
   cout << "\nSkriv in en sträng: ";
   cin >> string_var;
-  cout << "Strängen '" << string_var << "' har " << string_var.size() << " tecken." << endl;
+  cout << "Strängen '" << string_var << "' har " << string_var.size()
+       << " tecken." << endl;
   cin.ignore(100, '\n');
 
   cout << "\nSkriv in ett heltal och en sträng: ";
@@ -76,7 +78,8 @@ int main()
 
   cout << "\nSkriv in en sträng och ett flyttal: ";
   cin >> string_var >> double_num;
-  cout << "Du skrev in \"" << double_num << "\" och \"" << string_var << "\"." << endl;
+  cout << "Du skrev in \"" << double_num << "\" och \"" << string_var
+       << "\"." << endl;
   cin.ignore(100, '\n');
 
   cout << "\nSkriv in en hel rad med text: ";
