@@ -21,19 +21,18 @@ Time::Time(Time const& t1)
 : hour{t1.hour}, minute{t1.minute}, second{t1.second}
 {}
 
+Time::Time(string time_str)
+  : hour{stoi(time_str.substr(0,2))},
+    minute{stoi(time_str.substr(3,2))},
+    second{stoi(time_str.substr(6,2))} 
+{}
+
 bool Time::is_valid() const
 {
   return hour >= 0 && hour <= 23 
 	  && minute >= 0 && minute <= 60 
 	  && second >= 0 && second <= 60;  
 }
-
-bool Time::operator==(Time const& time) const
-{
-  return hour == time.get_hour() && minute == time.get_minute()
-    && second == time.get_second();
-}
-
 
 string Time::to_string(bool const& am_pm) const
 {
@@ -73,6 +72,35 @@ string Time::to_string(bool const& am_pm) const
   return str + end;
 }
 
+bool Time::operator==(Time const& time) const
+{
+  return time_to_sec(*this) == time_to_sec(time);
+}
+
+bool Time::operator!=(Time const& time) const
+{
+  return !(*this == time);
+}
+
+bool Time::operator>(Time const& time) const
+{
+  return time_to_sec(*this) > time_to_sec(time);
+}
+
+bool Time::operator>=(Time const& time) const
+{
+  return *this == time || *this > time;
+}
+
+bool Time::operator<(Time const& time) const
+{
+  return !(*this >= time);
+}
+
+bool Time::operator<=(Time const& time) const
+{
+  return !(*this > time);
+}
 
 Time Time::operator+(Time const& time)
 {
@@ -86,6 +114,7 @@ Time Time::operator-(Time const& time)
   set_time(time_to_sec(*this) - time_to_sec(time));
   return *this; 
 }
+
 
 // prefix ++ operator
 Time& Time::operator++()
@@ -117,6 +146,23 @@ Time Time::operator--(int) // dummy parameter
   return temp;
 }
 
+ostream& operator<<(ostream & out_stream, Time const& time)
+{
+  return out_stream << time.to_string(false);
+}
+
+istream& operator>>(istream & in_stream, Time const& time)
+{
+  if (!time.is_valid())
+  {
+    in_stream.setstate(std::ios_base::failbit);
+  }
+  string str{};
+  in_stream >> str;
+  // TODO
+  return in_stream;
+}
+
 int Time::get_hour() const {return hour;}
 int Time::get_minute() const {return minute;}
 int Time::get_second() const {return second;}
@@ -145,30 +191,3 @@ void Time::set_time(int total_seconds)
   second = total_seconds - sec_per_hour * hour - sec_per_min * minute;
 }
 
-void Time::adjust_time() // kasst namn ?
-{
-  minute += second / 60;
-  second %= 60;
-  
-  if (second < 0)
-  {
-    minute--;
-    second += 60;
-  }
-
-  hour += minute / 60;
-  minute %= 60;
-  
-  if (minute < 0)
-  {
-    hour--;
-    minute += 60;
-  }
-  
-  hour %= 24;
-  
-  if (hour < 0)
-  {
-    hour += 24;
-  }
-}

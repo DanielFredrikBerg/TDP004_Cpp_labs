@@ -1,7 +1,6 @@
 // Denna fil ska innehålla deklarationer för de typer och funktioner
 // som behövs
 
-// headerguard
 #ifndef TIME_H
 #define TIME_H
 
@@ -14,6 +13,7 @@ public:
   Time(int const hour, int const minute, int const second);
   Time(Time const& time, int const second);
   Time(Time const& time);
+  Time(std::string time_str);
 
   bool is_valid() const;
   bool operator==(Time const& time) const;
@@ -22,8 +22,6 @@ public:
   bool operator>=(Time const& time) const;
   bool operator<(Time const& time) const;
   bool operator<=(Time const& time) const;
-  
-  void adjust_time();
   
   std::string to_string(bool const& am_pm) const;
   
@@ -35,6 +33,9 @@ public:
 
   Time& operator--();
   Time operator--(int);
+
+  friend std::ostream& operator<<(std::ostream & out_stream, Time const& time);
+  friend std::istream& operator>>(std::istream & in_stream, Time const& time);
 
   int get_hour() const;
   int get_minute() const;
@@ -48,6 +49,4 @@ private:
   void set_time(int second);
   int time_to_sec(Time const& time) const; 
 };
-
-// end of headerguard
 #endif

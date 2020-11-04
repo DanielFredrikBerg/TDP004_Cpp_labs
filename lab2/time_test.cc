@@ -119,40 +119,69 @@ TEST_CASE("Checking postfix -- operator", "[operator--]")
 
 TEST_CASE("Checking >= operator", "[operator>=]")
 {
-  
+  Time t1{22, 10, 00};
+  Time t2{22, 10, 00};
+  Time t3{02, 43, 18};
+  REQUIRE(t1 >= t2);
+  REQUIRE(t1 >= t3);
+  REQUIRE(!(t3 >= t2));
 }
 
 TEST_CASE("Checking <= operator", "[operator<=]")
 {
-  
+  Time t1{22, 10, 00};
+  Time t2{22, 10, 00};
+  Time t3{02, 43, 18};
+  REQUIRE(t1 <= t2);
+  REQUIRE(t3 <= t2);
 }
 
 TEST_CASE("Checking > operator", "[operator>]")
 {
-  
+  Time t1{22, 10, 00};
+  Time t2{22, 10, 00};
+  Time t3{02, 43, 18};
+  REQUIRE(!(t1 > t2));
+  REQUIRE(t2 > t3);
 }
 
 TEST_CASE("Checking < operator", "[operator<]")
 {
-  
+  Time t1{22, 10, 00};
+  Time t2{22, 10, 00};
+  Time t3{02, 43, 18};
+  REQUIRE(!(t1 < t2));
+  REQUIRE(t3 < t2);
 }
 
 TEST_CASE("Checking == operator", "[operator==]")
 {
-  
+  Time t1{22, 10, 00};
+  Time t2{22, 10, 00};
+  Time t3{02, 43, 18};
+  REQUIRE(t1 == t2);
+  REQUIRE(!(t3 == t2));
 }
 
 TEST_CASE("Checking != operator", "[operator!=]")
 {
-  
+  Time t1{22, 10, 00};
+  Time t2{22, 10, 00};
+  Time t3{02, 43, 18};
+  REQUIRE(!(t1 != t2));
+  REQUIRE(t1 != t3);
 }
 
 TEST_CASE("Checking << operator", "[operator<<]")
 {
-  
+  std::string str{"one string"};
+  std::stringstream str_stream{};
+  str_stream << str;
+  REQUIRE(str_stream.str() == str);
 }
 
 TEST_CASE("Checking >> operator", "[operator>>]")
 {
-  
+  Time t1{"23:58:40"};
+  REQUIRE(t1.to_string(true) == "11:58:40 pm");
 }
