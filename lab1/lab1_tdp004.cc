@@ -1,8 +1,18 @@
 #include <iomanip>
 #include <iostream>
 
+// Ser fint ut! Bra jobbat, men jag har några små kompletteringar ni bör fixa.
+
+// Komplettering: 4-9, antar att ni har utkommenterad kod för att visa att det
+//                     går att göra med std::fill('=') också, men ta bort utkommenterad
+//                     kod i framtiden! :D I den här uppgiften godkänner vi båda
+//                     alternativen ni skrivit så välj en.
+
+// Komplettering: 1-4, radbrytning
+
 using namespace std;
 
+// Kommentar: Fina funktioner!
 float calc_vat(float base, float vat_percentage)
 {
   return base / 100 * vat_percentage;
@@ -17,6 +27,9 @@ float calc_price(float base_price, float vat)
 
 int main()
 {
+  // Kommentar: 1-9, värt att kolla på denna punkt till framtiden.
+  //            Tycker det är ok nu men vill bara att ni ska ha koll
+  //            på den punkten i rättningsprotokollet.
   float f_price{-1};
   float s_price{-1};
   float step{-1};
@@ -41,6 +54,8 @@ int main()
       cout << "FEL: Sista pris måste vara större eller lika stort som första pris" << endl;
     }
   }
+  // Komplettering: Varför adderar ni 0.000001? Varför plus? Kanske minus?
+  //                Hur vet ni om ni får 0.00001 för mycket eller för lite?
   while(step + 0.000001 < 0.01)
   {
     cout << "Mata in steglängd: ";
@@ -62,6 +77,7 @@ int main()
 
   //cout << "MOMSTABELLEN\n" << setfill('=') << setw(12) << "" << endl;
   cout << "\nMOMSTABELLEN\n============" << endl;
+  // Kommentar: Bra radbrytning!
   cout << setw(12) << right << "Pris" << setw(17) << "Moms" << setw(20)
        << "Pris med moms" << endl;
   cout << setfill('-') << setw(49) << "" << endl;
