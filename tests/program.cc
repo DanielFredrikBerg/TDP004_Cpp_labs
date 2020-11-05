@@ -20,6 +20,7 @@ int main()
    getline(cin, s);
    line = std::stoi(s);
    cout << "Din rad var följande: " << line << endl;
+   int i = {3.5};
    return 0;
 }
 
