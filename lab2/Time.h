@@ -5,6 +5,7 @@
 #define TIME_H
 
 #include <iostream>
+#include <exception>
 
 class Time
 {
@@ -13,6 +14,7 @@ public:
   Time(int const hour, int const minute, int const second);
   Time(Time const& time, int const second);
   Time(Time const& time);
+  Time(Time const& time1, Time const& time2);
   Time(std::string time_str);
 
   bool is_valid() const;
@@ -34,12 +36,12 @@ public:
   Time& operator--();
   Time operator--(int);
 
-  friend std::ostream& operator<<(std::ostream & out_stream, Time const& time);
-  friend std::istream& operator>>(std::istream & in_stream, Time const& time);
-
   int get_hour() const;
   int get_minute() const;
   int get_second() const;
+
+  friend std::ostream& operator<<(std::ostream & out_stream, Time const& time);
+  friend std::istream& operator>>(std::istream & in_stream, Time & time);
   
 private:
   int hour;
@@ -49,4 +51,6 @@ private:
   void set_time(int second);
   int time_to_sec(Time const& time) const; 
 };
+
+
 #endif

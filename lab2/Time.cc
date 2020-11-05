@@ -11,21 +11,32 @@ Time::Time()
 
 Time::Time(int const h, int const m, int const s)
 : hour{h}, minute{m}, second{s} 
-{}
+{
+  if (!is_valid())
+  {
+    throw runtime_error("Invalid time");
+  }
+}
 
 Time::Time(Time const& t1, int const s)
-: hour{t1.hour}, minute{t1.minute}, second{t1.second + s}
-{}
+{
+  set_time(time_to_sec(t1) + s);
+}
 
 Time::Time(Time const& t1)
 : hour{t1.hour}, minute{t1.minute}, second{t1.second}
 {}
 
 Time::Time(string time_str)
-  : hour{stoi(time_str.substr(0,2))},
-    minute{stoi(time_str.substr(3,2))},
-    second{stoi(time_str.substr(6,2))} 
-{}
+: hour{stoi(time_str.substr(0,2))},
+  minute{stoi(time_str.substr(3,2))},
+  second{stoi(time_str.substr(6,2))} 
+{
+  if (!is_valid())
+  {
+    throw runtime_error("Invalid time");
+  }
+}
 
 bool Time::is_valid() const
 {
@@ -104,26 +115,23 @@ bool Time::operator<=(Time const& time) const
 
 Time Time::operator+(Time const& time)
 {
-  set_time(time_to_sec(*this) + time_to_sec(time));
-  return *this;
+  return Time{*this, time_to_sec(time)};
 }
 
 
 Time Time::operator-(Time const& time)
 {
-  set_time(time_to_sec(*this) - time_to_sec(time));
-  return *this; 
+
+  return Time{*this, -time_to_sec(time)}; 
 }
 
 
-// prefix ++ operator
 Time& Time::operator++()
 {
   set_time(time_to_sec(*this) + 1);
   return *this;
 }
 
-// postfix ++ operator
 Time Time::operator++(int) 
 {
   Time temp{*this};
@@ -131,15 +139,13 @@ Time Time::operator++(int)
   return temp;
 }
 
-// prefix -- operator
 Time& Time::operator--()
 {
   set_time(time_to_sec(*this) - 1);
   return *this;
 }
 
-// postfix -- operator
-Time Time::operator--(int) // dummy parameter
+Time Time::operator--(int) 
 {
   Time temp{*this};
   --*this;
@@ -151,15 +157,21 @@ ostream& operator<<(ostream & out_stream, Time const& time)
   return out_stream << time.to_string(false);
 }
 
-istream& operator>>(istream & in_stream, Time const& time)
+istream& operator>>(istream & in_stream, Time & time)
 {
-  if (!time.is_valid())
+  string str{};
+  in_stream >> str;
+  Time const temp{str};
+  
+  if (!temp.is_valid())
   {
     in_stream.setstate(std::ios_base::failbit);
   }
-  string str{};
-  in_stream >> str;
-  // TODO
+  else
+  {
+    time.set_time(temp.time_to_sec(temp)); 
+  }
+  
   return in_stream;
 }
 

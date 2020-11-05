@@ -13,11 +13,13 @@ TEST_CASE("Time can be validated", "[is_valid]")
 {
 	Time t1{1,1,1};
 	Time t2{};
-	Time t3{t1 ,60};
+	Time t3{t1,60};
+	Time t4{"23:35:21"};
 
 	REQUIRE(t1.is_valid());
 	REQUIRE(t2.is_valid());
-	REQUIRE(!t3.is_valid());	
+	REQUIRE(t3.is_valid());
+	REQUIRE(t4.is_valid());	
 }
 
 TEST_CASE("Check to_string", "[to_string]")
@@ -39,14 +41,13 @@ TEST_CASE("Check to_string", "[to_string]")
 
 TEST_CASE("Checking + operator", "[operator+]")
 {
-  Time t1{00, 00, 30};
   Time t2{00, 00, 20};
   Time t3{23, 59, 59};
-  t3 + t2;
-  REQUIRE(t3.get_hour() == 0);
-  REQUIRE(t3.get_minute() == 0);
-  REQUIRE(t3.get_second() == 19);
-  REQUIRE((t1 + t2).get_second() == 50);
+  Time t1{t3 + t2};
+  REQUIRE(t1.get_hour() == 0);
+  REQUIRE(t1.get_minute() == 0);
+  REQUIRE(t1.get_second() == 19);
+  REQUIRE((t1 + t2).get_second() == 39);
 }
 
 TEST_CASE("Checking - operator", "[operator-]")
@@ -54,15 +55,19 @@ TEST_CASE("Checking - operator", "[operator-]")
   Time t1{01, 00, 00};
   Time t2{00, 40, 00};
   Time t3{23, 40, 20};
-  Time t4{24, 50, 30};
-  t1 - t2;
-  t3 - t4;
-  REQUIRE(t1.get_hour() == 0);
-  REQUIRE(t1.get_minute() == 20);
-  REQUIRE(t1.get_second() == 00);
-  REQUIRE(t3.get_hour() == 22);
-  REQUIRE(t3.get_minute() == 49);
-  REQUIRE(t3.get_second() == 50);
+  Time t4{23, 50, 30};
+  Time t5{t1 - t2};
+  Time t6{t3 - t4};
+  Time t7{t2 - t1};
+  REQUIRE(t5.get_hour() == 0);
+  REQUIRE(t5.get_minute() == 20);
+  REQUIRE(t5.get_second() == 00);
+  REQUIRE(t6.get_hour() == 23);
+  REQUIRE(t6.get_minute() == 49);
+  REQUIRE(t6.get_second() == 50);
+  REQUIRE(t7.get_hour() == 23);
+  REQUIRE(t7.get_minute() == 40);
+  REQUIRE(t7.get_second() == 00);
 }
 
 TEST_CASE("Checking prefix ++ operator", "[operator++]")
@@ -174,14 +179,32 @@ TEST_CASE("Checking != operator", "[operator!=]")
 
 TEST_CASE("Checking << operator", "[operator<<]")
 {
-  std::string str{"one string"};
+  Time t1{23, 59, 59};
+  std::string str{"23:59:59"};
   std::stringstream str_stream{};
-  str_stream << str;
+  str_stream << t1;
   REQUIRE(str_stream.str() == str);
 }
 
 TEST_CASE("Checking >> operator", "[operator>>]")
 {
   Time t1{"23:58:40"};
-  REQUIRE(t1.to_string(true) == "11:58:40 pm");
+  Time t2{};
+  std::stringstream str_stream{};
+  str_stream << t1;
+  str_stream >> t2;
+  REQUIRE(t2.get_hour() == 23);
+  
+  str_stream << "24:25:26";
+  try
+  {
+    str_stream >> t2;
+  }
+  catch (std::exception& e)
+  {
+    REQUIRE(!str_stream.good());
+  }
+  
+  
+  
 }
