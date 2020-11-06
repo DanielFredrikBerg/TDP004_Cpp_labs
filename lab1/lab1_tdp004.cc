@@ -31,10 +31,6 @@ int main()
   //            Tycker det är ok nu men vill bara att ni ska ha koll
   //            på den punkten i rättningsprotokollet.
   float f_price{-1};
-  float s_price{-1};
-  float step{-1};
-  float vat{-1};
-
   cout << "INMATNINGSDEL\n============" << endl;
   while(f_price < 0)
   {
@@ -45,26 +41,30 @@ int main()
       cout << "FEL: Första pris måste vara minst 0 (noll) kronor" << endl;
     }
   }
+  float s_price{-1};
   while(s_price < f_price)
   {
     cout << "Mata in sista pris: ";
     cin >> s_price;
     if (s_price < f_price)
     {
-      cout << "FEL: Sista pris måste vara större eller lika stort som första pris" << endl;
+      cout << "FEL: Sista pris måste vara större eller lika stort som första pris"
+	   << endl;
     }
   }
   // Komplettering: Varför adderar ni 0.000001? Varför plus? Kanske minus?
   //                Hur vet ni om ni får 0.00001 för mycket eller för lite?
-  while(step + 0.000001 < 0.01)
+  float step{-1};
+  while(step < 0.01)
   {
     cout << "Mata in steglängd: ";
     cin >> step;
-    if (step + 0.000001 < 0.01)
+    if (step < 0.01)
     {
       cout << "FEL: steglängd måste vara minst 0.01" << endl;
     }
   }
+  float vat{-1};
   while(vat < 0)
   {
     cout << "Mata in momsprocent: ";
@@ -75,17 +75,18 @@ int main()
     }
   }
 
-  //cout << "MOMSTABELLEN\n" << setfill('=') << setw(12) << "" << endl;
+  
   cout << "\nMOMSTABELLEN\n============" << endl;
   // Kommentar: Bra radbrytning!
   cout << setw(12) << right << "Pris" << setw(17) << "Moms" << setw(20)
        << "Pris med moms" << endl;
   cout << setfill('-') << setw(49) << "" << endl;
   
-  while(f_price <= s_price)
+  while(f_price <= s_price + 0.001)
   {
-    cout << fixed << setprecision(2) << setfill(' ') << setw(12) << right << f_price
-	 << setw(17) << calc_vat(f_price, vat) << setw(20) << calc_price(f_price, vat) << endl;
+    cout << fixed << setprecision(2) << setfill(' ') << setw(12)
+	 << right << f_price << setw(17) << calc_vat(f_price, vat)
+	 << setw(20) << calc_price(f_price, vat) << endl;
     f_price += step;
   }
   return 0;
