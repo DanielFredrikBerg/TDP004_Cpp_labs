@@ -41,46 +41,58 @@ Time::Time(string time_str)
 bool Time::is_valid() const
 {
   return hour >= 0 && hour <= 23 
-	  && minute >= 0 && minute <= 60 
-	  && second >= 0 && second <= 60;  
+	       && minute >= 0 && minute <= 60 
+	       && second >= 0 && second <= 60;  
 }
 
 string Time::to_string(bool const& am_pm) const
 {
-  string end{""};
-  string str{""};
   int temp_hour{hour};
+  string end{""};
   if (am_pm)
   {
     if (temp_hour >= 12)
     {
-      end += " pm";
+      end = " pm";
       if (temp_hour > 12)
       {
-	temp_hour -= 12;
+  temp_hour -= 12;
       }
     }
     else
     {
-      end += " am";
+      end = " am";
     }
   }
+
+  string str{""};
   if (temp_hour < 10)
   {
     str += "0";
   }
+
   str += std::to_string(temp_hour) + ":";
   if (minute < 10)
   {
     str += "0";
   }
+
   str += std::to_string(minute) + ":";
   if (second < 10)
   {
     str += "0";
   }
+
   str += std::to_string(second);
+
   return str + end;
+}
+
+void Time::operator=(Time const& time)
+{
+  hour = time.hour;
+  minute = time.minute;
+  second = time.second;
 }
 
 bool Time::operator==(Time const& time) const
@@ -161,7 +173,7 @@ istream& operator>>(istream & in_stream, Time & time)
 {
   string str{};
   in_stream >> str;
-  Time const temp{str};
+  Time temp{str};
   
   if (!temp.is_valid())
   {
@@ -169,7 +181,7 @@ istream& operator>>(istream & in_stream, Time & time)
   }
   else
   {
-    time.set_time(temp.time_to_sec(temp)); 
+    time = temp;
   }
   
   return in_stream;
@@ -189,6 +201,7 @@ void Time::set_time(int total_seconds)
   int sec_per_min{60};
   int sec_per_hour{sec_per_min * 60};
   int sec_per_day{sec_per_hour * 24};
+
   if (total_seconds < 0)
   {
     total_seconds += (1 + total_seconds / sec_per_day) * sec_per_day;
