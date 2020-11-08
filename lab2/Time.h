@@ -18,6 +18,7 @@ public:
   Time(std::string time_str);
 
   bool is_valid() const;
+  void operator=(Time const& time);
   bool operator==(Time const& time) const;
   bool operator!=(Time const& time) const;
   bool operator>(Time const& time) const;
@@ -40,8 +41,7 @@ public:
   int get_minute() const;
   int get_second() const;
 
-  friend std::ostream& operator<<(std::ostream & out_stream, Time const& time);
-  friend std::istream& operator>>(std::istream & in_stream, Time & time);
+
   
 private:
   int hour;
@@ -52,5 +52,7 @@ private:
   int time_to_sec(Time const& time) const; 
 };
 
+std::ostream& operator<<(std::ostream & out_stream, Time const& time);
+std::istream& operator>>(std::istream & in_stream, Time & time);
 
 #endif
