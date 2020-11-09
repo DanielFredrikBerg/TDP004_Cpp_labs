@@ -50,8 +50,8 @@ Element* last_elem_iter(Element* pekvariabel)
 // Uppgift 6
 Element* last_elem_rec(Element* pekvariabel)
 {
-  if (pekvariabel -> next == nullptr ||
-      pekvariabel == nullptr)
+  if (pekvariabel == nullptr || 
+      pekvariabel -> next == nullptr)
     {
       return pekvariabel;
     }
@@ -68,4 +68,14 @@ void insert(Element* e, int i)
 }
 // Förklara bildligt vad som händer vid insert(first, 2);
 // Titta i anteckningar.
+// Denna insert lägger bara på ett element som blir
+// svårt att ta bort sen.
+
+// Uppgift 8 - Rita en figur av följande kod.
+int* data[3];
+for (int i = 0; i < 3; i++)
+{
+  data[i] = new int(i);
+}
+// Se anteckningar för bild.
 
