@@ -41,14 +41,12 @@ Element* last_elem_iter(Element* pekvariabel)
   {
     while (pekvariabel -> next != nullptr)
     {
-      
+      pekvariabel = pekvariabel -> next;
     }
   }
-  else
-  {
-    return pekvariabel;
-  }
+  return pekvariabel -> value;
 }
+
 // Uppgift 6
 Element* last_elem_rec(Element* pekvariabel)
 {
@@ -63,6 +61,11 @@ Element* last_elem_rec(Element* pekvariabel)
   }
 }
 
-// Uppgift 6
-
+// Uppgift 7 - given func:
+void insert(Element* e, int i)
+{
+  e = new Element(e -> next, i);
+}
+// Förklara bildligt vad som händer vid insert(first, 2);
+// Titta i anteckningar.
 
