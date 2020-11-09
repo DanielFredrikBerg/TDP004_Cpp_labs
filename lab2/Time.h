@@ -14,7 +14,6 @@ public:
   Time(int const hour, int const minute, int const second);
   Time(Time const& time, int const second);
   Time(Time const& time);
-  Time(Time const& time1, Time const& time2);
   Time(std::string time_str);
 
   bool is_valid() const;
@@ -28,8 +27,8 @@ public:
   
   std::string to_string(bool const& am_pm) const;
   
-  Time operator+(Time const& time);
-  Time operator-(Time const& time);
+  Time operator+(Time const& time) const;
+  Time operator-(Time const& time) const;
 
   Time& operator++();
   Time operator++(int);
