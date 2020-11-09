@@ -3,8 +3,6 @@
 
 #include "Time.h" 
 
-using namespace std;
-
 Time::Time()
 : hour{}, minute{}, second{} 
 {}
@@ -14,7 +12,7 @@ Time::Time(int const hour, int const minute, int const second)
 {
   if (!is_valid())
   {
-    throw runtime_error("Invalid time");
+    throw std::runtime_error("Invalid time");
   }
 }
 
@@ -27,29 +25,28 @@ Time::Time(Time const& time)
 : hour{time.hour}, minute{time.minute}, second{time.second}
 {}
 
-Time::Time(string time_str)
+Time::Time(std::string time_str)
 : hour{stoi(time_str.substr(0,2))},
   minute{stoi(time_str.substr(3,2))},
   second{stoi(time_str.substr(6,2))} 
 {
   if (!is_valid())
   {
-    throw runtime_error("Invalid time");
+    throw std::runtime_error("Invalid time");
   }
 }
 
-//Ska min och sek kunna vara 60?
 bool Time::is_valid() const
 {
   return hour >= 0 && hour <= 23 
-	       && minute >= 0 && minute <= 59 
-	       && second >= 0 && second <= 59;  
+    && minute >= 0 && minute <= 59 
+    && second >= 0 && second <= 59;  
 }
 
-string Time::to_string(bool const& am_pm) const
+std::string Time::to_string(bool const& am_pm) const
 {
   int temp_hour{hour};
-  string end{""};
+  std::string end{""};
   if (am_pm)
   {
     if (temp_hour >= 12)
@@ -66,7 +63,7 @@ string Time::to_string(bool const& am_pm) const
     }
   }
 
-  string str{""};
+  std::string str{""};
   if (temp_hour < 10)
   {
     str += "0";
@@ -165,14 +162,14 @@ Time Time::operator--(int)
   return temp;
 }
 
-ostream& operator<<(ostream & out_stream, Time const& time)
+std::ostream& operator<<(std::ostream & out_stream, Time const& time)
 {
   return out_stream << time.to_string(false);
 }
 
-istream& operator>>(istream & in_stream, Time & time)
+std::istream& operator>>(std::istream & in_stream, Time & time)
 {
-  string str{};
+  std::string str{};
   in_stream >> str;
   Time temp{str};
   

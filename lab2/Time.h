@@ -48,7 +48,7 @@ private:
   int second;
 
   int time_to_sec(Time const& time) const; 
-  void set_time(int second);
+  void set_time(int total_seconds);
 };
 
 std::ostream& operator<<(std::ostream & out_stream, Time const& time);
