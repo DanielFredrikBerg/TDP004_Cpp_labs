@@ -11,6 +11,7 @@
 // This define lets Catch create the main test program
 // (Must be in only one place!)
 #include "catch.hpp"
+#include "sorted_list.h"
 
 #include <random>
 
@@ -31,7 +32,7 @@ TEST_CASE( "Create an empty list" )
 // Move this comment and following #if 0 down one case at a time!
 // Make sure to close any open braces before this comment.
 // The #if 0 will disable the rest of the file.
-#if 0
+
 
 TEST_CASE( "Insert an item in an empty list" ) 
 {
@@ -39,10 +40,11 @@ TEST_CASE( "Insert an item in an empty list" )
 
     l.insert(5);
   
-    REQUIRE( l.is_empty() );
-    REQUIRE( l.size() == 0 );
+    REQUIRE( !(l.is_empty()) );
+    REQUIRE( l.size() == 1 );
   
 }
+
 
 SCENARIO( "Empty lists" ) 
 {
@@ -50,6 +52,7 @@ SCENARIO( "Empty lists" )
     GIVEN( "An empty list" ) 
     {
 	Sorted_List l{};
+        int number{3};
 
 	REQUIRE( l.is_empty() );
 	REQUIRE( l.size() == 0 );
@@ -58,12 +61,13 @@ SCENARIO( "Empty lists" )
 	{
 
 	    // insert an item
+          l.insert(number);
       
 	    THEN( "the size increase and the item is first in the list" )
 	    {
-		REQUIRE( l.is_empty()  );
-		REQUIRE( l.size() == 0 );
-		REQUIRE( /* test that item is first in list */ );
+              REQUIRE( !(l.is_empty())  );
+              REQUIRE( l.size() == 1 );
+              REQUIRE( l.first_value() == number );
 	    }
 	}
     
@@ -71,18 +75,21 @@ SCENARIO( "Empty lists" )
 	{
 
 	    // remove an item
-      
+          l.remove(number);
+          
 	    THEN( "the list is still empty" )
 	    {
 		// add your REQUIRE statements
+              REQUIRE( l.is_empty() );
+              REQUIRE( l.size() == 0 );
 	    }
 	}
     
 	WHEN( "the list is copied to a new list" )
 	{
-
 	    // copy your list to a new variable (copy constructor)
-      
+          
+          
 	    THEN( "the new list is also empty" )
 	    {
 		// add your REQUIRE statements
@@ -102,6 +109,7 @@ SCENARIO( "Empty lists" )
 	}
     }
 }
+#if 0
 
 SCENARIO( "Single item lists" )
 {

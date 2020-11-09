@@ -4,24 +4,28 @@
 
 #include <iostream>
 
-class Sorted_list
+class Sorted_List
 {
 public:
-  Sorted_list();
+  Sorted_List();
   //Sorted_list(Node node);
 
   bool is_empty() const;
-
-
+  int size() const;
+  void insert(int const value);
+  void remove(int const value);
+  int first_value() const;
+  
 
 private:
-  struct Node
+  class Node
   {
+  public:
     int value;
-    Node* node_ptr;
+    Node* next;
   };
-  Node* first_node;
-  int size;
+  Node* head;
+  int size_var;
   void print_node(Node const& node) const;
   
 };
