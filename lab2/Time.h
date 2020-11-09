@@ -48,8 +48,8 @@ private:
   int minute;
   int second;
 
-  void set_time(int second);
   int time_to_sec(Time const& time) const; 
+  void set_time(int second);
 };
 
 std::ostream& operator<<(std::ostream & out_stream, Time const& time);

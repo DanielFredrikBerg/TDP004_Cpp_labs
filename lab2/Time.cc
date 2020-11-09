@@ -3,6 +3,8 @@
 
 #include "Time.h" 
 
+// Vi använder namespace, men kanske borde ta bort det och skriva in 
+// std:: överallt istället? Vi är ej konsekventa.
 using namespace std;
 
 Time::Time()
@@ -38,6 +40,7 @@ Time::Time(string time_str)
   }
 }
 
+//Ska min och sek kunna vara 60?
 bool Time::is_valid() const
 {
   return hour >= 0 && hour <= 23 
@@ -56,7 +59,7 @@ string Time::to_string(bool const& am_pm) const
       end = " pm";
       if (temp_hour > 12)
       {
-  temp_hour -= 12;
+         temp_hour -= 12;
       }
     }
     else
@@ -211,6 +214,7 @@ void Time::set_time(int total_seconds)
     total_seconds %= sec_per_day;
   }
 
+  // Borde ha {} här istället för =?
   hour = total_seconds / sec_per_hour;
   minute = (total_seconds - hour * sec_per_hour) / sec_per_min;
   second = total_seconds - sec_per_hour * hour - sec_per_min * minute;
