@@ -1,18 +1,16 @@
-// I denna fil lÃ¤ggs definitionerna (implementationen) av de funktioner
+// I denna fil lÃƒÂ¤ggs definitionerna (implementationen) av de funktioner
 // som deklarerats i Time.h
 
 #include "Time.h" 
 
-// Vi använder namespace, men kanske borde ta bort det och skriva in 
-// std:: överallt istället? Vi är ej konsekventa.
 using namespace std;
 
 Time::Time()
 : hour{}, minute{}, second{} 
 {}
 
-Time::Time(int const h, int const m, int const s)
-: hour{h}, minute{m}, second{s} 
+Time::Time(int const hour, int const minute, int const second)
+: hour{hour}, minute{minute}, second{second} 
 {
   if (!is_valid())
   {
@@ -20,13 +18,13 @@ Time::Time(int const h, int const m, int const s)
   }
 }
 
-Time::Time(Time const& t1, int const s)
+Time::Time(Time const& time, int const seconds)
 {
-  set_time(time_to_sec(t1) + s);
+  set_time(time_to_sec(time) + seconds);
 }
 
-Time::Time(Time const& t1)
-: hour{t1.hour}, minute{t1.minute}, second{t1.second}
+Time::Time(Time const& time)
+: hour{time.hour}, minute{time.minute}, second{time.second}
 {}
 
 Time::Time(string time_str)
@@ -44,8 +42,8 @@ Time::Time(string time_str)
 bool Time::is_valid() const
 {
   return hour >= 0 && hour <= 23 
-	       && minute >= 0 && minute <= 60 
-	       && second >= 0 && second <= 60;  
+	       && minute >= 0 && minute <= 59 
+	       && second >= 0 && second <= 59;  
 }
 
 string Time::to_string(bool const& am_pm) const
@@ -128,13 +126,13 @@ bool Time::operator<=(Time const& time) const
   return !(*this > time);
 }
 
-Time Time::operator+(Time const& time)
+Time Time::operator+(Time const& time) const
 {
   return Time{*this, time_to_sec(time)};
 }
 
 
-Time Time::operator-(Time const& time)
+Time Time::operator-(Time const& time) const
 {
 
   return Time{*this, -time_to_sec(time)}; 
@@ -214,7 +212,6 @@ void Time::set_time(int total_seconds)
     total_seconds %= sec_per_day;
   }
 
-  // Borde ha {} här istället för =?
   hour = total_seconds / sec_per_hour;
   minute = (total_seconds - hour * sec_per_hour) / sec_per_min;
   second = total_seconds - sec_per_hour * hour - sec_per_min * minute;
