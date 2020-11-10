@@ -171,6 +171,7 @@ Sorted_List& Sorted_List::operator=(Sorted_List const& other)
 {
   Sorted_List temp{other};
   head = temp.head;
+  temp.head = nullptr;
   size_var = temp.size_var;
   return *this;
 }
