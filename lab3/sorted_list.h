@@ -3,7 +3,7 @@
 #define SORTED_LIST_H
 
 #include <iostream>
-
+#include <string>
 
 class Sorted_List
 {
@@ -17,8 +17,11 @@ public:
   void insert(int const value);
   void remove(int const value);
   int first_value() const;
+  std::string to_string() const;
   void print() const;
+  void clear();  
   
+  Sorted_List& operator=(Sorted_List const& other);
 
 private:
   class Node

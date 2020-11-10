@@ -44,6 +44,24 @@ TEST_CASE( "Insert an item in an empty list" )
     REQUIRE( l.size() == 1 );
 }
 
+TEST_CASE( "Successful insertion" )
+{
+  Sorted_List l{};
+
+  l.insert(8);
+  REQUIRE( l.first_value() == 8 );
+  l.insert(5);
+  REQUIRE( l.first_value() == 5 );
+}
+
+TEST_CASE( "Successful copy" )
+{
+  Sorted_List l{};
+  l.insert(8);
+  Sorted_List c{l};
+  REQUIRE( l.first_value() == c.first_value() );
+}
+
 
 SCENARIO( "Empty lists" ) 
 {
@@ -58,7 +76,6 @@ SCENARIO( "Empty lists" )
     
 	WHEN( "an item is inserted" )
 	{
-
 	    // insert an item
           l.insert(number);
       
@@ -84,18 +101,19 @@ SCENARIO( "Empty lists" )
 	    }
 	}
     
-	WHEN( "the list is copied to a new list" )
+	WHEN( "the empty list is copied to a new list" )
 	{
 	    // copy your list to a new variable (copy constructor)
-           Sorted_List copied_list{l};
+           Sorted_List c_list{l};
+
 	    THEN( "the new list is also empty" )
 	    {
 		// add your REQUIRE statements
-               REQUIRE( copied_list.is_empty() == l.is_empty() );
+               REQUIRE( c_list.is_empty() == l.is_empty() );
 	    }
 	}
 
-        WHEN( "the list has a node and is copied to a new list")
+        WHEN( "the list gets a node and is copied to a new list")
         {
            l.insert(5);
            l.print();
@@ -111,49 +129,69 @@ SCENARIO( "Empty lists" )
     
 	WHEN( "the list is copied to an existing non-empty list" )
 	{
+          // Sorted_List existing_list{};
+          // existing_list.insert(7);
+          // existing_list.insert(5);
+          // existing_list.insert(9);
+          // Sorted_List copied{};
+          // existing_list{copied};
+          
 	    // create and fill a list to act as the existing list
 	    // copy (assign) your empty list to the existing
       
-	    THEN( "the existing list is also empty" )
+	    THEN( "the existing list also becomes empty" )
 	    {
 		// add your REQUIRE statements
+              //REQUIRE( existing_list.is_empty() );
 	    }
       
 	}
     }
 }
-#if 0
 
 SCENARIO( "Single item lists" )
 {
 
     GIVEN( "A list with one item in it" )
     {
-
+      Sorted_List l{};
+      l.insert(5);
 	// create the given scenario
     
 	WHEN( "a smaller item is inserted" )
 	{
-	    THEN( /* describe what will happen */ )
+          l.insert(2);
+
+	    THEN( "first value is the smaller value" )
 	    {
+              REQUIRE( l.first_value() == 2 );
 	    }
 	}
 	WHEN( "a larger item is inserted" )
 	{
-	    THEN( /* describe what will happen */ )
+          l.insert(10);
+
+	    THEN( "the larger item will be placed last" )
 	    {
+              REQUIRE( l.to_string() == "[2, 5, 10]" );
 	    }
 	}
 	WHEN( "an item is removed" )
 	{
-	    THEN( /* describe what will happen */ )
+          l.remove(5);
+
+	    THEN( "the middle element is removed" )
 	    {
+              REQUIRE( l.to_string() == "[2, 10]" );
 	    }
 	}
 	WHEN( "the list is copied to a new list" )
 	{
-	    THEN( /* describe what will happen */ )
+          Sorted_List new_list{l};
+
+	    THEN( "new_list contains the same elements as l" )
 	    {
+              REQUIRE( l.to_string() == new_list.to_string() );
 	    }
 	}
 	WHEN( "the list is copied to an existing non-empty list" )
@@ -164,6 +202,8 @@ SCENARIO( "Single item lists" )
 	}
     }
 }
+
+#if 0
 
 SCENARIO( "Multi-item lists" )
 {

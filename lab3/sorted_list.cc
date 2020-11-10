@@ -6,6 +6,7 @@ Sorted_List::Sorted_List()
 
 // Copy Constructor
 Sorted_List::Sorted_List(Sorted_List const& s_list)
+  : head{nullptr}, size_var{0}
 {
    if (!s_list.head)
    {
@@ -111,7 +112,7 @@ void Sorted_List::Node::insert(int const value)
   }
 }
 
-void Sorted_List::print() const
+std::string Sorted_List::to_string() const
 {
   std::string str{"["};
   Node* tmp{head};
@@ -125,7 +126,31 @@ void Sorted_List::print() const
     tmp = tmp -> next;
   }
   str += "]";
-  std::cout << str << std::endl;
+  return str;
+}
+
+void Sorted_List::print() const
+{
+  std::string content{to_string()};
+  std::cout << content << std::endl;
+}
+
+void Sorted_List::clear()
+{
+  Node* tmp{head};
+  
+}
+
+Sorted_List& Sorted_List::operator=(Sorted_List const& other)
+{
+  // Ta bort om det finns något inuti.
+  if (head != nullptr)
+  {
+    *this.clear();
+  }
+  head = other.head;
+  other.head = nullptr;
+  return *this;
 }
 
 
