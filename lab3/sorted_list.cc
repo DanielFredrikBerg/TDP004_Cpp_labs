@@ -147,7 +147,8 @@ void Sorted_List::clear()
   }
 }
 
-Sorted_List& Sorted_List::operator=(Sorted_List const& other)
+// move assign
+Sorted_List& Sorted_List::operator=(Sorted_List && other)
 {
   // Ta bort om det finns något inuti.
   if (head != nullptr)
