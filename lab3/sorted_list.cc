@@ -12,18 +12,11 @@ Sorted_List::Sorted_List(Sorted_List const& s_list)
       return;
    }
    Node* tmp{s_list.head};
-   head = new Node{};
-   head->value = tmp->value;
-   head->next = nullptr;
-   Node* current{head};
-
+   
    while (tmp != nullptr)
    {
-      current->next = new Node{};
+      insert(tmp->value);
       tmp = tmp->next;
-      current = current->next;
-      current->value = tmp->value;
-      current->next = nullptr;
    }
 } 
 
@@ -56,11 +49,14 @@ void Sorted_List::insert(int const value)
   {
     head = new Node{value, nullptr};
   }
-// TODO
-  // else
-  // {
-  //    Node* current{head};
-  // }
+  else if (head -> value >= value)
+  {
+    head = new Node{value, head};
+  }
+  else
+  {
+    head -> insert(value);
+  }
   ++size_var;
 }
 
@@ -97,17 +93,18 @@ int Sorted_List::first_value() const
   return head -> value;
 }
 
-
-
-
-
-int main()
+void Sorted_List::Node::insert(int const value)
 {
-   Sorted_List l{};
-   l.insert(3);
-   std::cout << l.first_value() << std::endl;
-   Sorted_List cp{l};
-   std::cout << cp.first_ptr() << std::endl;
+  if (next == nullptr || value <= next -> value)
+  {
+    next = new Node{value, next};
+  }
+  else
+  {
+    next -> insert(value);
+  }
 }
+
+
 
 

@@ -41,33 +41,27 @@ TEST_CASE("Check to_string", "[to_string]")
 
 TEST_CASE("Checking + operator", "[operator+]")
 {
-  Time t2{00, 00, 20};
   Time t3{23, 59, 59};
-  Time t1{t3 + t2};
+  Time t1{t3 + 20};
   REQUIRE(t1.get_hour() == 0);
   REQUIRE(t1.get_minute() == 0);
   REQUIRE(t1.get_second() == 19);
-  REQUIRE((t1 + t2).get_second() == 39);
+  REQUIRE((t1 + 20).get_second() == 39);
 }
 
 TEST_CASE("Checking - operator", "[operator-]")
 {
   Time t1{01, 00, 00};
-  Time t2{00, 40, 00};
-  Time t3{23, 40, 20};
+  Time t3{0, 0, 0};
   Time t4{23, 50, 30};
-  Time t5{t1 - t2};
-  Time t6{t3 - t4};
-  Time t7{t2 - t1};
+  Time t5{t1 - 40 * 60};
+  Time t6{t3 - 670};
   REQUIRE(t5.get_hour() == 0);
   REQUIRE(t5.get_minute() == 20);
   REQUIRE(t5.get_second() == 00);
   REQUIRE(t6.get_hour() == 23);
-  REQUIRE(t6.get_minute() == 49);
+  REQUIRE(t6.get_minute() == 48);
   REQUIRE(t6.get_second() == 50);
-  REQUIRE(t7.get_hour() == 23);
-  REQUIRE(t7.get_minute() == 40);
-  REQUIRE(t7.get_second() == 00);
 }
 
 TEST_CASE("Checking prefix ++ operator", "[operator++]")
@@ -204,7 +198,4 @@ TEST_CASE("Checking >> operator", "[operator>>]")
   {
     REQUIRE(!str_stream.good());
   }
-  
-  
-  
 }

@@ -43,7 +43,7 @@ bool Time::is_valid() const
     && second >= 0 && second <= 59;  
 }
 
-std::string Time::to_string(bool const& am_pm) const
+std::string Time::to_string(bool const am_pm) const
 {
   int temp_hour{hour};
   std::string end{""};
@@ -86,11 +86,12 @@ std::string Time::to_string(bool const& am_pm) const
   return str + end;
 }
 
-void Time::operator=(Time const& time)
+Time& Time::operator=(Time const& time)
 {
   hour = time.hour;
   minute = time.minute;
   second = time.second;
+  return *this;
 }
 
 bool Time::operator==(Time const& time) const
@@ -123,16 +124,15 @@ bool Time::operator<=(Time const& time) const
   return !(*this > time);
 }
 
-Time Time::operator+(Time const& time) const
+Time Time::operator+(int const seconds) const
 {
-  return Time{*this, time_to_sec(time)};
+  return Time{*this, seconds};
 }
 
 
-Time Time::operator-(Time const& time) const
+Time Time::operator-(int const seconds) const
 {
-
-  return Time{*this, -time_to_sec(time)}; 
+  return Time{*this, -seconds}; 
 }
 
 

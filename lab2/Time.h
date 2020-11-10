@@ -17,7 +17,7 @@ public:
   Time(std::string time_str);
 
   bool is_valid() const;
-  void operator=(Time const& time);
+  Time& operator=(Time const& time);
   bool operator==(Time const& time) const;
   bool operator!=(Time const& time) const;
   bool operator>(Time const& time) const;
@@ -25,10 +25,10 @@ public:
   bool operator<(Time const& time) const;
   bool operator<=(Time const& time) const;
   
-  std::string to_string(bool const& am_pm) const;
+  std::string to_string(bool const am_pm) const;
   
-  Time operator+(Time const& time) const;
-  Time operator-(Time const& time) const;
+  Time operator+(int const seconds) const;
+  Time operator-(int const seconds) const;
 
   Time& operator++();
   Time operator++(int);

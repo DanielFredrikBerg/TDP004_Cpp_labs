@@ -23,11 +23,12 @@ private:
    class Node
    {
    private:
-      Node copy_node(Node* node_ptr);
+      
       
    public:
-      int value;
-      Node* next;
+     int value;
+     Node* next;
+     void insert(int const value);
    };
    Node* head;
    int size_var;
