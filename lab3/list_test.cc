@@ -42,7 +42,6 @@ TEST_CASE( "Insert an item in an empty list" )
   
     REQUIRE( !(l.is_empty()) );
     REQUIRE( l.size() == 1 );
-  
 }
 
 
@@ -89,7 +88,6 @@ SCENARIO( "Empty lists" )
 	{
 	    // copy your list to a new variable (copy constructor)
            Sorted_List copied_list{l};
-          
 	    THEN( "the new list is also empty" )
 	    {
 		// add your REQUIRE statements
@@ -99,8 +97,10 @@ SCENARIO( "Empty lists" )
 
         WHEN( "the list has a node and is copied to a new list")
         {
-           l.insert(number);
+           l.insert(5);
+           l.print();
            Sorted_List copied_list{l};
+           copied_list.print();
            
            THEN ( "the copied list contains the same value and size" )
            {
