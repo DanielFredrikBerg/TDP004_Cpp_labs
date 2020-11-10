@@ -88,13 +88,26 @@ SCENARIO( "Empty lists" )
 	WHEN( "the list is copied to a new list" )
 	{
 	    // copy your list to a new variable (copy constructor)
-          
+           Sorted_List copied_list{l};
           
 	    THEN( "the new list is also empty" )
 	    {
 		// add your REQUIRE statements
+               REQUIRE( copied_list.is_empty() == l.is_empty() );
 	    }
 	}
+
+        WHEN( "the list has a node and is copied to a new list")
+        {
+           l.insert(number);
+           Sorted_List copied_list{l};
+           
+           THEN ( "the copied list contains the same value and size" )
+           {
+              REQUIRE( copied_list.first_value() == l.first_value() );
+              REQUIRE( copied_list.size() == l.size() );
+           }
+        }
     
 	WHEN( "the list is copied to an existing non-empty list" )
 	{
