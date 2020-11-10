@@ -155,9 +155,25 @@ Sorted_List& Sorted_List::operator=(Sorted_List && other)
   {
     clear();
   }
+
   head = other.head;
   other.head = nullptr;
+
+  size_var = other.size_var;
+  other.size_var = 0;
+
   return *this;
 }
+
+
+// copy assign
+Sorted_List& Sorted_List::operator=(Sorted_List const& other)
+{
+  Sorted_List temp{other};
+  head = temp.head;
+  size_var = temp.size_var;
+  return *this;
+}
+
 
 

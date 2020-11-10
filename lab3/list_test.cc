@@ -59,10 +59,8 @@ TEST_CASE( "Successful clear" )
   Sorted_List l{};
   l.insert(8);
   l.insert(5);
-  l.print();
   l.clear();
   REQUIRE( l.is_empty() );
-  l.print();
 }
 
 TEST_CASE( "Successful copy" )
@@ -79,7 +77,7 @@ SCENARIO( "Empty lists" )
     GIVEN( "An empty list" ) 
     {
 	Sorted_List l{};
-        int number{3};
+    int number{3};
 
 	REQUIRE( l.is_empty() );
 	REQUIRE( l.size() == 0 );
@@ -114,21 +112,19 @@ SCENARIO( "Empty lists" )
 	WHEN( "the empty list is copied to a new list" )
 	{
 	    // copy your list to a new variable (copy constructor)
-           Sorted_List c_list{l};
+        Sorted_List c_list{l};
 
 	    THEN( "the new list is also empty" )
 	    {
-		// add your REQUIRE statements
-               REQUIRE( c_list.is_empty() == l.is_empty() );
+			// add your REQUIRE statements
+            REQUIRE( c_list.is_empty() == l.is_empty() );
 	    }
 	}
 
         WHEN( "the list gets a node and is copied to a new list")
         {
            l.insert(5);
-           l.print();
            Sorted_List copied_list{l};
-           copied_list.print();
            
            THEN ( "the copied list contains the same value and size" )
            {
@@ -139,25 +135,26 @@ SCENARIO( "Empty lists" )
     
 	WHEN( "the list is copied to an existing non-empty list" )
 	{
-          // Sorted_List existing_list{};
-          // existing_list.insert(7);
-          // existing_list.insert(5);
-          // existing_list.insert(9);
-          // Sorted_List copied{};
-          // existing_list{copied};
           
 	    // create and fill a list to act as the existing list
+        Sorted_List l2{};
+        l2.insert(7);
+        l2.insert(9);
+
 	    // copy (assign) your empty list to the existing
-      
+      	l2 = l;
+
 	    THEN( "the existing list also becomes empty" )
 	    {
-		// add your REQUIRE statements
-              //REQUIRE( existing_list.is_empty() );
+			  // add your REQUIRE statements
+              REQUIRE( l2.is_empty() );
 	    }
       
 	}
     }
 }
+
+#if 0
 
 SCENARIO( "Single item lists" )
 {
