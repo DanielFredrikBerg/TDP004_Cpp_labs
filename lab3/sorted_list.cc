@@ -105,6 +105,20 @@ void Sorted_List::Node::insert(int const value)
   }
 }
 
-
+void Sorted_List::print() const
+{
+  string str{"["};
+  Node* tmp{head}
+  while (tmp != nullptr)
+  {
+    str += to_string(tmp -> value);
+    if (tmp -> next != nullptr)
+    {
+      str += ", ";
+    }
+    tmp = tmp -> next;
+  }
+  str += "]"; 
+}
 
 
