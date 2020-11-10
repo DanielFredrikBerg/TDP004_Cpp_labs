@@ -22,6 +22,7 @@ public:
   void clear();  
   
   Sorted_List& operator=(Sorted_List const& other);
+  Sorted_List& operator=(Sorted_List && other);
 
 private:
   class Node

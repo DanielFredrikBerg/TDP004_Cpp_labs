@@ -137,8 +137,14 @@ void Sorted_List::print() const
 
 void Sorted_List::clear()
 {
+  size_var = 0;
   Node* tmp{head};
-  
+  while (head != nullptr)
+  {
+    head = head -> next;
+    delete tmp;
+    tmp = head;
+  }
 }
 
 Sorted_List& Sorted_List::operator=(Sorted_List const& other)
@@ -146,7 +152,7 @@ Sorted_List& Sorted_List::operator=(Sorted_List const& other)
   // Ta bort om det finns något inuti.
   if (head != nullptr)
   {
-    *this.clear();
+    clear();
   }
   head = other.head;
   other.head = nullptr;

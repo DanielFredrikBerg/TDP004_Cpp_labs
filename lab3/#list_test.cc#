@@ -73,8 +73,6 @@ TEST_CASE( "Successful copy" )
   REQUIRE( l.first_value() == c.first_value() );
 }
 
-#if 0
-
 SCENARIO( "Empty lists" ) 
 {
   
