@@ -36,7 +36,7 @@ TEST_CASE("Check to_string", "[to_string]")
 
   REQUIRE(t1.to_string(true) == "12:20:59 pm");
   REQUIRE(t2.to_string(true) == "11:10:00 pm");
-// KlaAr36: Fel. Timme 0 existerar inte i am/pm formen.
+// KlaAr36: Fel. Timme 0 existerar inte i am/pm formen. - FIXAT
   REQUIRE(t3.to_string(true) == "12:00:00 am");
   REQUIRE(t2.to_string(false) == "23:10:00");
   REQUIRE(t3.to_string(false) == "00:00:00");
@@ -204,7 +204,7 @@ TEST_CASE("Checking >> operator", "[operator>>]")
 
 
 // KlaAr36: Standard är att endast felflaggan sätts vid formaterad inmatning. Överkurs: Endast om programmeraren begärt undantag via ios::exceptions ska undantag genereras. Ni behöver alltså fånga undantaget i operator>> så det inte dyker upp här. Finns för övrigt en CHECK_THROWS för de tillfällen man vill kontrollera att det faktiskt blir ett undantag.
-  str_stream << "22:25:26";
+  str_stream << "24:25:26";
   str_stream >> t2;
   REQUIRE(!str_stream.good());
 }

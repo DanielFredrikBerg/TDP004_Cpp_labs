@@ -182,7 +182,7 @@ std::istream& operator>>(std::istream & in_stream, Time & time)
 
   in_stream >> hour_temp >> minute_temp >> second_temp;
   
-// KlaAr36: Komplettering: Fungerar inte. Ni måste fånga undantaget från er konstruktor för att detektera felet
+// KlaAr36: Komplettering: Fungerar inte. Ni måste fånga undantaget från er konstruktor för att detektera felet - KLART
   try
   {
     Time temp{hour_temp, minute_temp, second_temp};
