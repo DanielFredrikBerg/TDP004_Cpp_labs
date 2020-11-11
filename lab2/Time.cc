@@ -4,11 +4,12 @@
 #include "Time.h" 
 
 Time::Time()
-: hour{}, minute{}, second{} 
+  : hour{}, minute{}, second{} 
 {}
 
+// KlaAr36: Mycket bra löst. Omöjligt skapa felaktiga tider!
 Time::Time(int const hour, int const minute, int const second)
-: hour{hour}, minute{minute}, second{second} 
+  : hour{hour}, minute{minute}, second{second} 
 {
   if (!is_valid())
   {
@@ -16,9 +17,11 @@ Time::Time(int const hour, int const minute, int const second)
   }
 }
 
+// KlaAr36: Komplettering: Datamedlemmar ska initieras i datamedlemsinitieringslista - KLART
 Time::Time(Time const& time, int const seconds)
+  : hour{0}, minute{0}, second{0}
 {
-  set_time(time_to_sec(time) + seconds);
+  set_time(time.time_to_sec() + seconds);
 }
 
 Time::Time(Time const& time)
@@ -26,10 +29,13 @@ Time::Time(Time const& time)
 {}
 
 Time::Time(std::string time_str)
-: hour{stoi(time_str.substr(0,2))},
-  minute{stoi(time_str.substr(3,2))},
-  second{stoi(time_str.substr(6,2))} 
+//: // hour{stoi(time_str.substr(0,2))},
+  // minute{stoi(time_str.substr(3,2))},
+  // second{stoi(time_str.substr(6,2))} 
 {
+  std::cout << time_str.substr(0,2) << std::endl;
+  std::cout << time_str.substr(3,2) << std::endl;
+  std::cout << time_str.substr(6,2) << std::endl;
   if (!is_valid())
   {
     throw std::runtime_error("Invalid time");
@@ -38,9 +44,19 @@ Time::Time(std::string time_str)
 
 bool Time::is_valid() const
 {
+// KlaAr36: Skrivsättet ( 0 <= hour <= 23 ) skulle vara tydligast och i c++ kan vi komma ganska nära genom att skriva ( 0 <= hour && hour <= 23 ). Ni är i sin tur väldigt nära det. Bra!
   return hour >= 0 && hour <= 23 
     && minute >= 0 && minute <= 59 
     && second >= 0 && second <= 59;  
+}
+
+std::string Time::fill_digit(int const number) const
+{
+  if (number < 10)
+  {
+    return "0";
+  }
+  return "";
 }
 
 std::string Time::to_string(bool const am_pm) const
@@ -60,31 +76,30 @@ std::string Time::to_string(bool const am_pm) const
     else
     {
       end = " am";
+// KlaAr36: Komplettering: Det ser ut som ni missar specialfallet att "0:xx:xx" skrivs "12:xx:xx am" - KLART
     }
   }
-
+  
   std::string str{""};
-  if (temp_hour < 10)
+  if (am_pm && temp_hour == 0)
   {
-    str += "0";
+    temp_hour = 12; 
   }
-
-  str += std::to_string(temp_hour) + ":";
-  if (minute < 10)
+// KlaAr36: Komplettering: Kodupprepning. Gör funktion eller använd strängström med setfill för att fylla med nolla! - KLART
+  int array[3]{temp_hour, minute, second};
+  for (int i{0}; i < 3; i++)
   {
-    str += "0";
+      str += fill_digit(array[i]);
+      str += std::to_string(array[i]);
+      if (i < 2)
+      {
+        str += ":";
+      }
   }
-
-  str += std::to_string(minute) + ":";
-  if (second < 10)
-  {
-    str += "0";
-  }
-
-  str += std::to_string(second);
-
   return str + end;
 }
+
+
 
 Time& Time::operator=(Time const& time)
 {
@@ -96,7 +111,9 @@ Time& Time::operator=(Time const& time)
 
 bool Time::operator==(Time const& time) const
 {
-  return time_to_sec(*this) == time_to_sec(time);
+// KlaAr36: Komplettering: Ej objektorienterat skrivsätt. Så ska det vara:
+//  return time_to_sec() == time.time_to_sec(); - KLART
+  return time_to_sec() == time.time_to_sec();
 }
 
 bool Time::operator!=(Time const& time) const
@@ -106,7 +123,8 @@ bool Time::operator!=(Time const& time) const
 
 bool Time::operator>(Time const& time) const
 {
-  return time_to_sec(*this) > time_to_sec(time);
+// KlaAr36: Komplettering: Ej objektorienterat skrivsätt. -KLART
+  return time_to_sec() > time.time_to_sec();
 }
 
 bool Time::operator>=(Time const& time) const
@@ -124,6 +142,7 @@ bool Time::operator<=(Time const& time) const
   return !(*this > time);
 }
 
+// KlaAr36: Snyggt. Kunde vara "return *this += seconds".
 Time Time::operator+(int const seconds) const
 {
   return Time{*this, seconds};
@@ -138,7 +157,7 @@ Time Time::operator-(int const seconds) const
 
 Time& Time::operator++()
 {
-  set_time(time_to_sec(*this) + 1);
+  set_time(time_to_sec() + 1);
   return *this;
 }
 
@@ -151,7 +170,7 @@ Time Time::operator++(int)
 
 Time& Time::operator--()
 {
-  set_time(time_to_sec(*this) - 1);
+  set_time(time_to_sec() - 1);
   return *this;
 }
 
@@ -162,36 +181,43 @@ Time Time::operator--(int)
   return temp;
 }
 
+// KlaAr36: Bra! Snyggt!
 std::ostream& operator<<(std::ostream & out_stream, Time const& time)
 {
   return out_stream << time.to_string(false);
 }
 
+// KlaAr36: Bra! Snyggt! Rätt tänk och nära referenslösning. 
 std::istream& operator>>(std::istream & in_stream, Time & time)
 {
   std::string str{};
   in_stream >> str;
-  Time temp{str};
   
-  if (!temp.is_valid())
+// KlaAr36: Komplettering: Fungerar inte. Ni måste fånga undantaget från er konstruktor för att detektera felet
+  try
+  {
+    
+    Time temp{str};
+    time = temp;
+    
+  } 
+  catch (const std::runtime_error& error)
   {
     in_stream.setstate(std::ios_base::failbit);
-  }
-  else
-  {
-    time = temp;
   }
   
   return in_stream;
 }
 
+
+
 int Time::get_hour() const {return hour;}
 int Time::get_minute() const {return minute;}
 int Time::get_second() const {return second;}
 
-int Time::time_to_sec(Time const& time) const
+int Time::time_to_sec() const
 {
-  return time.hour * 3600 + time.minute * 60 + time.second; 
+  return hour * 3600 + minute * 60 + second; 
 }
 
 void Time::set_time(int total_seconds)
@@ -202,6 +228,7 @@ void Time::set_time(int total_seconds)
 
   if (total_seconds < 0)
   {
+// KlaAr36: Bra uttänkt!
     total_seconds += (1 + total_seconds / sec_per_day) * sec_per_day;
   }
   if (total_seconds >= sec_per_day)
@@ -213,4 +240,3 @@ void Time::set_time(int total_seconds)
   minute = (total_seconds - hour * sec_per_hour) / sec_per_min;
   second = total_seconds - sec_per_hour * hour - sec_per_min * minute;
 }
-

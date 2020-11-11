@@ -47,7 +47,8 @@ private:
   int minute;
   int second;
 
-  int time_to_sec(Time const& time) const; 
+  std::string fill_digit(int const number) const;
+  int time_to_sec() const; 
   void set_time(int total_seconds);
 };
 

@@ -424,7 +424,6 @@ SCENARIO( "Lists can be passed to functions" )
 
 	WHEN( "the list is passed to trigger_move()" )
 	{
-
 	    Sorted_List l{ trigger_move(given) };
       
 	    THEN( "the given list remain and the result have the change" )
@@ -437,7 +436,7 @@ SCENARIO( "Lists can be passed to functions" )
     }
 }
 
-#if 0
+
 // In addition you must of course verify that the list is printed
 // correct and that no memory leaks occur during use. You can solve
 // the printing part on your own. Here's how to run the (test) program
@@ -454,7 +453,12 @@ SCENARIO( "Lists can be passed to functions" )
 void use_const_list(Sorted_List const& l)
 {
     // perform every operation that do not modify the list here
-    return l;
+  l.is_empty();
+  l.is_sorted();
+  l.size();
+  l.first_value();
+  l.to_string();
+  l.print();
 }
 
-#endif
+

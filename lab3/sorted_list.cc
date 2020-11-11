@@ -195,6 +195,10 @@ Sorted_List& Sorted_List::operator=(Sorted_List && other)
 // copy assign
 Sorted_List& Sorted_List::operator=(Sorted_List const& other)
 {
+  if (head != nullptr)
+  {
+    clear();
+  }
   Sorted_List temp{other};
   head = temp.head;
   temp.head = nullptr;
