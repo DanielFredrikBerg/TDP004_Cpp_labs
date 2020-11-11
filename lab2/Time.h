@@ -14,7 +14,6 @@ public:
   Time(int const hour, int const minute, int const second);
   Time(Time const& time, int const second);
   Time(Time const& time);
-  Time(std::string time_str);
 
   bool is_valid() const;
   Time& operator=(Time const& time);

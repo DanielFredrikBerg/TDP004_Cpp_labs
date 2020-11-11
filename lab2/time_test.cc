@@ -17,7 +17,7 @@ TEST_CASE("Time can be validated", "[is_valid]")
 	Time t1{1,1,1};
 	Time t2{};
 	Time t3{t1,60};
-	Time t4{"23:35:21"};
+	Time t4{23, 35, 21};
 
 // KlaAr36: Komplettering: Implementationen is_valid() { return true; } klarar era tester.
 	REQUIRE(t1.is_valid());
@@ -194,14 +194,15 @@ TEST_CASE("Checking << operator", "[operator<<]")
 
 TEST_CASE("Checking >> operator", "[operator>>]")
 {
-  Time t1{"23:58:40"};
+  Time t1{23, 58, 40};
   Time t2{};
 // KlaAr36: Ger varning. Tydligare använda en std::istringstream{"23:58:40"} så blir ni även av med "t1" och "str_stream << t1;"
   std::stringstream str_stream{};
   str_stream << t1;
   str_stream >> t2;
   REQUIRE(t2.get_hour() == 23);
-  
+
+
 // KlaAr36: Standard är att endast felflaggan sätts vid formaterad inmatning. Överkurs: Endast om programmeraren begärt undantag via ios::exceptions ska undantag genereras. Ni behöver alltså fånga undantaget i operator>> så det inte dyker upp här. Finns för övrigt en CHECK_THROWS för de tillfällen man vill kontrollera att det faktiskt blir ett undantag.
   str_stream << "22:25:26";
   str_stream >> t2;

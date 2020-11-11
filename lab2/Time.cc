@@ -28,20 +28,6 @@ Time::Time(Time const& time)
 : hour{time.hour}, minute{time.minute}, second{time.second}
 {}
 
-Time::Time(std::string time_str)
-//: // hour{stoi(time_str.substr(0,2))},
-  // minute{stoi(time_str.substr(3,2))},
-  // second{stoi(time_str.substr(6,2))} 
-{
-  std::cout << time_str.substr(0,2) << std::endl;
-  std::cout << time_str.substr(3,2) << std::endl;
-  std::cout << time_str.substr(6,2) << std::endl;
-  if (!is_valid())
-  {
-    throw std::runtime_error("Invalid time");
-  }
-}
-
 bool Time::is_valid() const
 {
 // KlaAr36: Skrivsättet ( 0 <= hour <= 23 ) skulle vara tydligast och i c++ kan vi komma ganska nära genom att skriva ( 0 <= hour && hour <= 23 ). Ni är i sin tur väldigt nära det. Bra!
@@ -190,14 +176,16 @@ std::ostream& operator<<(std::ostream & out_stream, Time const& time)
 // KlaAr36: Bra! Snyggt! Rätt tänk och nära referenslösning. 
 std::istream& operator>>(std::istream & in_stream, Time & time)
 {
-  std::string str{};
-  in_stream >> str;
+  int hour_temp;
+  int minute_temp;
+  int second_temp;
+
+  in_stream >> hour_temp >> minute_temp >> second_temp;
   
 // KlaAr36: Komplettering: Fungerar inte. Ni måste fånga undantaget från er konstruktor för att detektera felet
   try
   {
-    
-    Time temp{str};
+    Time temp{hour_temp, minute_temp, second_temp};
     time = temp;
     
   } 
