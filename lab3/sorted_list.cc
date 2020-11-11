@@ -23,9 +23,9 @@ Sorted_List::Sorted_List(Sorted_List const& other_list)
 
 // Move Constructor
 Sorted_List::Sorted_List(Sorted_List && s_list)
-  :head{s_list -> first}, size_var{s_list.size_var}
+  :head{s_list.head}, size_var{s_list.size_var}
 {
-  s_list.first = nullptr;
+  s_list.head = nullptr;
   s_list.size_var = 0;
 }
 
@@ -33,7 +33,6 @@ Sorted_List::Sorted_List(Sorted_List && s_list)
 Sorted_List::~Sorted_List()
 {
    Node* current{head};
-
    while (current != nullptr)
    {
       current = current->next;
@@ -48,6 +47,23 @@ bool Sorted_List::is_empty() const
   return head == nullptr;
 }
 
+bool Sorted_List::is_sorted() const
+{
+  Node* tmp{head};
+  if (tmp == nullptr)
+  {
+    return true;
+  }
+  while (tmp -> next != nullptr)
+  {
+    if (tmp -> value > tmp -> next -> value)
+    {
+      return false;
+    }
+    tmp = tmp -> next;
+  }
+  return true;
+}
 
 int Sorted_List::size() const
 {

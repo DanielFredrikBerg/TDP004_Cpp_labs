@@ -315,25 +315,38 @@ SCENARIO( "Multi-item lists" )
     }
 }
 
-#if 0
+
 
 SCENARIO( "Lists can be copied" )
 {
 
-    GIVEN( "A list with five items in it, and a new copy of that list" )
-    {
+  GIVEN( "A list with five items in it, and a new copy of that list" )
+  {
+    Sorted_List five{};
+    five.insert(2);
+    five.insert(4);
+    five.insert(6);
+    five.insert(8);
+    five.insert(10);
+    Sorted_List copy{five};
 
 	WHEN( "the original list is changed" )
 	{
+          five.remove(4);
 	    THEN( "the copy remain unmodified" )
 	    {
+              REQUIRE( five.to_string() != copy.to_string() );
+              REQUIRE( copy.to_string() == "[2, 4, 6, 8, 10]");
 	    }
 	}
 
 	WHEN( "the copied list is changed" )
 	{
+          copy.remove(10);
 	    THEN( "the original remain unmodified" )
 	    {
+              REQUIRE( copy.to_string() != five.to_string() );
+              REQUIRE( five.to_string() == "[2, 4, 6, 8, 10]");
 	    }
 	}
     }
@@ -346,7 +359,7 @@ SCENARIO( "Lists can be heavily used" )
 
     GIVEN( "A list with 1000 random items in it" )
     {
-    
+      Sorted_List many{};
 	// create the given list with 1000 random items
 	std::random_device rd;
 	std::uniform_int_distribution<int> uniform(1,1000);
@@ -354,19 +367,38 @@ SCENARIO( "Lists can be heavily used" )
 	for (int i{0}; i < 1000; ++i)
 	{
 	    int random { uniform(rd) }; // generate a random number
-	    // insert into list
+	    many.insert(random);
 	}
     
-	WHEN( "the list have 1000 random numbers inserted" )
+	WHEN( "the list has 1000 random numbers inserted" )
 	{
-	    // THEN the list have 2000 items in correct order
+          for (int j{0}; j < 1000; j++)
+          {
+            int random { uniform(rd) };
+            many.insert(random);
+          }
+	    // THEN the list has 2000 items in correct order
 	    // (assumes unique inserts or duplicates allowed)
+          THEN( "the list has 2000 items in order from small to big" )
+          {
+            REQUIRE( many.size() == 2000 );
+            REQUIRE( many.is_sorted() );
+          }
 	}
 
-	WHEN( "the list have 2000 random numbers removed" )
+	WHEN( "the list has 20000 random numbers removed" )
 	{
+          for (int j{0}; j < 20000; j++)
+          {
+            int random { uniform(rd) };
+            many.remove(random);
+          }
 	    // THEN the list is empty
 	    // (assumes successful removes)
+          THEN( "the list is empty" )
+          {
+            REQUIRE( many.is_empty() );
+          }
 	}
     }
 }
@@ -374,18 +406,22 @@ SCENARIO( "Lists can be heavily used" )
 Sorted_List trigger_move(Sorted_List l)
 {
     // do some (any) modification to list
+    l.insert(6);
     return l;
 }
 
 SCENARIO( "Lists can be passed to functions" )
 {
-
+  
     GIVEN( "A list with 5 items in it" )
     {
-
 	Sorted_List given{};
 	// insert 5 items
-  
+        for (int i{0}; i < 5; i++)
+        {
+          given.insert(i);
+        }
+
 	WHEN( "the list is passed to trigger_move()" )
 	{
 
@@ -393,11 +429,15 @@ SCENARIO( "Lists can be passed to functions" )
       
 	    THEN( "the given list remain and the result have the change" )
 	    {
+              REQUIRE( given.size() == 5 );
+              REQUIRE( l.size() == 6 );
+              REQUIRE( given.to_string() != l.to_string() );
 	    }
 	}
     }
 }
 
+#if 0
 // In addition you must of course verify that the list is printed
 // correct and that no memory leaks occur during use. You can solve
 // the printing part on your own. Here's how to run the (test) program

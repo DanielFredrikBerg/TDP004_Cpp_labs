@@ -14,6 +14,7 @@ public:
   ~Sorted_List();
 
   bool is_empty() const;
+  bool is_sorted() const;
   int size() const;
   void insert(int const value);
   void remove(int const value);
