@@ -21,6 +21,14 @@ Sorted_List::Sorted_List(Sorted_List const& other_list)
    }
 } 
 
+// Move Constructor
+Sorted_List::Sorted_List(Sorted_List && s_list)
+  :head{s_list -> first}, size_var{s_list.size_var}
+{
+  s_list.first = nullptr;
+  s_list.size_var = 0;
+}
+
 // Destructor
 Sorted_List::~Sorted_List()
 {
@@ -43,7 +51,6 @@ bool Sorted_List::is_empty() const
 
 int Sorted_List::size() const
 {
-  //std::cout << "size" << std::endl;
   return size_var;
 }
 
@@ -72,7 +79,6 @@ void Sorted_List::remove(int const value)
   Node* tmp{head};
   if (size() == 0)
   {
-    //std::cout << "remove" << std::endl;
     return;
   }
   else if (first_value() == value)
@@ -82,7 +88,7 @@ void Sorted_List::remove(int const value)
     --size_var;
     return;
   }  
-  while (tmp -> next) //nullptr är automatiskt false
+  while (tmp -> next) 
   {
     if (tmp -> next -> value == value)
     {
@@ -99,7 +105,6 @@ void Sorted_List::remove(int const value)
 
 int Sorted_List::first_value() const
 {
-  //std::cout << "first value" << std::endl;
   return head -> value;
 }
 
@@ -137,8 +142,7 @@ std::string Sorted_List::to_string() const
 
 void Sorted_List::print() const
 {
-  std::string content{to_string()};
-  std::cout << content << std::endl;
+  std::cout << to_string() << std::endl;
 }
 
 
@@ -158,12 +162,10 @@ void Sorted_List::clear()
 // move assign
 Sorted_List& Sorted_List::operator=(Sorted_List && other)
 {
-  // Ta bort om det finns något inuti.
   if (head != nullptr)
   {
     clear();
   }
-
   head = other.head;
   other.head = nullptr;
 

@@ -10,6 +10,7 @@ class Sorted_List
 public:
   Sorted_List();
   Sorted_List(Sorted_List const& s_list);
+  Sorted_List(Sorted_List && s_list);
   ~Sorted_List();
 
   bool is_empty() const;
