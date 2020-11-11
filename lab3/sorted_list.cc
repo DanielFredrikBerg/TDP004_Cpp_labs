@@ -5,14 +5,14 @@ Sorted_List::Sorted_List()
 {}
 
 // Copy Constructor
-Sorted_List::Sorted_List(Sorted_List const& s_list)
+Sorted_List::Sorted_List(Sorted_List const& other_list)
   : head{nullptr}, size_var{0}
 {
-   if (!s_list.head)
+   if (!other_list.head)
    {
       return;
    }
-   Node* tmp{s_list.head};
+   Node* tmp{other_list.head};
    
    while (tmp != nullptr)
    {
@@ -33,6 +33,7 @@ Sorted_List::~Sorted_List()
       head = current;
    }
 }
+
 
 bool Sorted_List::is_empty() const
 {
@@ -65,6 +66,7 @@ void Sorted_List::insert(int const value)
   ++size_var;
 }
 
+
 void Sorted_List::remove(int const value)
 {
   Node* tmp{head};
@@ -94,11 +96,13 @@ void Sorted_List::remove(int const value)
   }
 }
 
+
 int Sorted_List::first_value() const
 {
   //std::cout << "first value" << std::endl;
   return head -> value;
 }
+
 
 void Sorted_List::Node::insert(int const value)
 {
@@ -111,6 +115,7 @@ void Sorted_List::Node::insert(int const value)
     next -> insert(value);
   }
 }
+
 
 std::string Sorted_List::to_string() const
 {
@@ -129,11 +134,13 @@ std::string Sorted_List::to_string() const
   return str;
 }
 
+
 void Sorted_List::print() const
 {
   std::string content{to_string()};
   std::cout << content << std::endl;
 }
+
 
 void Sorted_List::clear()
 {
@@ -146,6 +153,7 @@ void Sorted_List::clear()
     tmp = head;
   }
 }
+
 
 // move assign
 Sorted_List& Sorted_List::operator=(Sorted_List && other)

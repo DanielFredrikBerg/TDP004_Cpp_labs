@@ -77,7 +77,7 @@ SCENARIO( "Empty lists" )
     GIVEN( "An empty list" ) 
     {
 	Sorted_List l{};
-    int number{3};
+        int number{3};
 
 	REQUIRE( l.is_empty() );
 	REQUIRE( l.size() == 0 );
@@ -154,7 +154,6 @@ SCENARIO( "Empty lists" )
     }
 }
 
-#if 0
 
 SCENARIO( "Single item lists" )
 {
@@ -172,6 +171,7 @@ SCENARIO( "Single item lists" )
 	    THEN( "first value is the smaller value" )
 	    {
               REQUIRE( l.first_value() == 2 );
+              REQUIRE( l.to_string() == "[2, 5]");
 	    }
 	}
 	WHEN( "a larger item is inserted" )
@@ -180,73 +180,142 @@ SCENARIO( "Single item lists" )
 
 	    THEN( "the larger item will be placed last" )
 	    {
-              REQUIRE( l.to_string() == "[2, 5, 10]" );
+              REQUIRE( l.to_string() == "[5, 10]" );
 	    }
 	}
 	WHEN( "an item is removed" )
 	{
           l.remove(5);
 
-	    THEN( "the middle element is removed" )
+	    THEN( "the list is empty" )
 	    {
-              REQUIRE( l.to_string() == "[2, 10]" );
+               REQUIRE( l.is_empty() );
+              REQUIRE( l.to_string() == "[]" );
 	    }
 	}
 	WHEN( "the list is copied to a new list" )
 	{
           Sorted_List new_list{l};
 
-	    THEN( "new_list contains the same elements as l" )
-	    {
-              REQUIRE( l.to_string() == new_list.to_string() );
-	    }
+          THEN( "new_list contains the same elements as l" )
+          {
+             REQUIRE( l.to_string() == new_list.to_string() );
+          }
 	}
 	WHEN( "the list is copied to an existing non-empty list" )
 	{
-	    THEN( /* describe what will happen */ )
-	    {
-	    }
+           Sorted_List non_empty{};
+           non_empty.insert(3);
+           l = non_empty;
+           
+           THEN( "the list now contains the same values and size as the non-empty list" )
+           {
+              REQUIRE( l.to_string() == non_empty.to_string() );
+              REQUIRE( l.size() == non_empty.size() );
+           }
 	}
     }
 }
-
-
 
 SCENARIO( "Multi-item lists" )
 {
 
     GIVEN( "A list with five items in it" )
     {
+       Sorted_List five{};
+       five.insert(2);
+       five.insert(4);
+       five.insert(6);
+       five.insert(8);
+       five.insert(10);
 
 	// create the given scenario and all THEN statements
 	// and all REQUIRE statements
     
-	WHEN( "an item smaller than all other is inserted" )
+	WHEN( "an item smaller than all others is inserted" )
 	{
+           five.insert(0);
+
+           THEN( "the smaller item is placed first" )
+           {
+              REQUIRE( five.first_value() == 0 );
+              REQUIRE( five.to_string() == "[0, 2, 4, 6, 8, 10]" );
+           }
 	}
-	WHEN( "an item larger than all other is inserted" )
+      
+	WHEN( "an item larger than all others is inserted" )
 	{
+           five.insert(11);
+
+           THEN( "the larger item is placed last" )
+           {
+              REQUIRE( five.to_string() == "[2, 4, 6, 8, 10, 11]" );
+           }
+
 	}
 	WHEN( "an item smaller than all but one item is inserted" )
 	{
+           five.insert(3);
+
+           THEN( "the item is placed in the second place" )
+           {
+              REQUIRE( five.to_string() == "[2, 3, 4, 6, 8, 10]" );
+           }
+
 	}
 	WHEN( "an item larger than all but one item is inserted" )
 	{
+           five.insert(9);
+
+           THEN( "the smaller item is placed second last" )
+           {
+              REQUIRE( five.to_string() == "[2, 4, 6, 8, 9, 10]" );
+           }
+
 	}
 	WHEN( "an item is removed" )
 	{
+           five.remove(6);
+
+           THEN( "all items but the one removed are still in the list" )
+           {
+              REQUIRE( five.to_string() == "[2, 4, 8, 10]" );
+           }
+
 	}
 	WHEN( "all items are removed" )
 	{
+           five.clear();
+           
+           THEN( "the list is empty" )
+           {
+              REQUIRE( five.is_empty() );
+           }
 	}
 	WHEN( "the list is copied to a new list" )
 	{
+           Sorted_List new_list{five};
+           THEN( "list and new list contain the same items" )
+           {
+              REQUIRE( five.to_string() == new_list.to_string() );
+           }
 	}
 	WHEN( "the list is copied to an existing non-empty list" )
 	{
+           Sorted_List new_list{};
+           new_list.insert(2);
+           new_list.insert(2);
+           new_list.insert(2);
+           new_list = five;
+           THEN( "the lists contain the same values" )
+           {
+              REQUIRE( new_list.to_string() == five.to_string() );
+           }
 	}
     }
 }
+
+#if 0
 
 SCENARIO( "Lists can be copied" )
 {
@@ -269,6 +338,8 @@ SCENARIO( "Lists can be copied" )
 	}
     }
 }
+
+
 
 SCENARIO( "Lists can be heavily used" )
 {
