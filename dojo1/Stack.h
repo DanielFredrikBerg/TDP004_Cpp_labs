@@ -4,20 +4,31 @@
 class Stack
 {
 public:
-   Stack();
-   void put(int const value);
-   int pop();
+  Stack();
+  Stack(Stack const& other);
+  Stack(Stack && other);
+  ~Stack();
 
-   int size;
+  void put(int const value);
+  int pop();
+  int peek() const;
+  
+  bool is_empty() const;
+  int show_size() const;
+  void print_stack() const;
+
+  Stack& operator=(Stack const& other) const;
+  Stack& operator=(Stack && other);
 
 private:
-   class Layer
-   {
-      int value;
-      Layer* next;
-   };
-
-
+  class Layer
+  {
+  public:
+    int const value;
+    Layer* next;
+  };
+  int size;
+  Layer* first;
 
 };
 #endif
