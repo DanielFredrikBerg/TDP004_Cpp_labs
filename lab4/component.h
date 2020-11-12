@@ -5,13 +5,14 @@ class Component
 {
 public:
   Component();
-  int plus_side;
-  int minus_side;
+  double next;
+  double previous;
   string name;
-  virtual double update(double const value) const = 0;
+  virtual double update() const = 0;
 
 private:
-
+  virtual double calc_voltage(double const next, double const previous);
+  virtual double calc_power(double const next, double const previous);
 }
 
 
