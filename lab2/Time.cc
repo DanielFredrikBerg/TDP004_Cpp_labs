@@ -179,8 +179,11 @@ std::istream& operator>>(std::istream & in_stream, Time & time)
   int hour_temp;
   int minute_temp;
   int second_temp;
-
-  in_stream >> hour_temp >> minute_temp >> second_temp;
+  char semicolon;
+  
+  in_stream >> hour_temp >> semicolon 
+            >> minute_temp >> semicolon 
+            >> second_temp;
   
 // KlaAr36: Komplettering: Fungerar inte. Ni måste fånga undantaget från er konstruktor för att detektera felet - KLART
   try
