@@ -15,7 +15,6 @@ public:
   Time(Time const& time, int const second);
   Time(Time const& time);
 
-  bool is_valid() const;
   Time& operator=(Time const& time);
   bool operator==(Time const& time) const;
   bool operator!=(Time const& time) const;
@@ -45,6 +44,7 @@ private:
   int hour;
   int minute;
   int second;
+  bool is_valid() const;
 
   std::string fill_digit(int const number) const;
   int time_to_sec() const; 

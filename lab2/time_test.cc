@@ -14,16 +14,11 @@
 
 TEST_CASE("Time can be validated", "[is_valid]")
 {
-	Time t1{1,1,1};
-	Time t2{};
-	Time t3{t1,60};
-	Time t4{23, 35, 21};
-
-// KlaAr36: Komplettering: Implementationen is_valid() { return true; } klarar era tester.
-	REQUIRE( t1.is_valid() );
-	REQUIRE( t2.is_valid() );
-	REQUIRE( t3.is_valid() );
-	REQUIRE( t4.is_valid() );	
+// KlaAr36: Komplettering: Implementationen is_valid() { return true; } klarar era tester. KLART
+        CHECK_THROWS( Time{42, 1, 1} );
+        CHECK_THROWS( Time{23, -21, 10} );
+        REQUIRE( Time{12, 8, 10}.to_string(false) == "12:08:10" );
+        REQUIRE( Time{0,0,0}.to_string(false) == "00:00:00" );  
 }
 
 TEST_CASE("Check to_string", "[to_string]")
