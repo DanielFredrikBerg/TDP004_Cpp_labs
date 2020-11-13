@@ -23,7 +23,7 @@ Sorted_List::Sorted_List(Sorted_List const& other_list)
 
 // Move Constructor
 Sorted_List::Sorted_List(Sorted_List && s_list)
-  :head{s_list.head}, size_var{s_list.size_var}
+  : head{s_list.head}, size_var{s_list.size_var}
 {
   s_list.head = nullptr;
   s_list.size_var = 0;
@@ -67,11 +67,7 @@ int Sorted_List::size() const
 
 void Sorted_List::insert(int const value)
 {
-  if (is_empty())
-  {
-    head = new Node{value, nullptr};
-  }
-  else if (head -> value >= value)
+  if (is_empty() || head -> value >= value)
   {
     head = new Node{value, head};
   }

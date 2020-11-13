@@ -6,13 +6,13 @@
 class Resistor : public Component
 {
 public:
-  Resistor(int resistance);
-  double update();
-
+  Resistor(std::string name, double value, Connection positive, Connection negative);
+  void Component::update(double interval);
+  //double Component::calc_current();
+  //int get_resistance() const;
+  
 private:
-  int resistance;
-  double calc_voltage(double const next, double const previous);
-  double calc_power(double const next, double const previous);
-}
+  //int resistance;
+};
 
 #endif

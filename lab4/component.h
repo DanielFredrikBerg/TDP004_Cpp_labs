@@ -1,19 +1,27 @@
 #ifndef COMPONENT_H
 #define COMPONENT_H
 
+#include <string>
+#include "connection.h"
+
 class Component
 {
 public:
   Component();
-  double next;
-  double previous;
-  string name;
-  virtual double update() const = 0;
+  virtual ~Component();
+  virtual void update(double interval) = 0;
+  double calc_voltage();
+  virtual double charge_to_move() = 0;
+
+protected:
+  std::string name;
+  double value;
+  Connection positive;
+  Connection negative;
 
 private:
-  virtual double calc_voltage(double const next, double const previous);
-  virtual double calc_power(double const next, double const previous);
-}
+  
+};
 
 
 
