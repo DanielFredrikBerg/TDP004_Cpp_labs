@@ -32,13 +32,7 @@ Sorted_List::Sorted_List(Sorted_List && s_list)
 // Destructor
 Sorted_List::~Sorted_List()
 {
-   Node* current{head};
-   while (current != nullptr)
-   {
-      current = current->next;
-      delete head;
-      head = current;
-   }
+  clear();
 }
 
 
@@ -76,7 +70,6 @@ void Sorted_List::insert(int const value)
   if (is_empty())
   {
     head = new Node{value, nullptr};
-    //std::cout << "insert" << std::endl;
   }
   else if (head -> value >= value)
   {
@@ -92,18 +85,20 @@ void Sorted_List::insert(int const value)
 
 void Sorted_List::remove(int const value)
 {
-  Node* tmp{head};
   if (size() == 0)
   {
     return;
   }
-  else if (first_value() == value)
+
+  Node* tmp{head};
+  if (first_value() == value)
   {
     head = head -> next;
     delete tmp;
     --size_var;
     return;
   }  
+
   while (tmp -> next) 
   {
     if (tmp -> next -> value == value)
