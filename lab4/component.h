@@ -8,7 +8,7 @@ class Component
 {
 public:
   Component(std::string name, double value, Connection & positive, Connection & negative);
-  virtual ~Component();
+  virtual ~Component() = default;
   virtual void update(double interval);
   double calc_voltage();
   virtual void move_charge(double charge_flow);
