@@ -4,6 +4,37 @@ Sorted_List::Sorted_List()
    : head{nullptr}, size_var{0}
 {}
 
+/* Komplettering:
+ * Ni använder tmp som namn på väldigt många variabler.
+ * Det är inte en jättebra beskrivning på vad den gör,
+ * endast den är temporär, vilket alla lokala variabler
+ * i en funktion är.
+*/
+
+/* Kommentar:
+ * I er Node klass så har ni en insert fuktion som har som uppgift
+ * att sätta in ett värde i listan. Detta betyder att det är Node's
+ * uppgift att allokera datat. Eftersom det är Nodes funktion som
+ * gör detta. Detta betyder att det även borde vara Nodes ansvar att
+ * ta bort datat som har blivit allokerat. Ni har även att Sorted_lists
+ * insert gör en allokering av data. Helst vill man att den som allokerar
+ * minnet också har som ansvar att ta bort det.
+*/
+
+/* Kommentar för kopieringstilldelning:
+ * Kan vara bra att kolla så att användaren inte skickar in this som
+ * parameter vid kopiering. List l1{1,2,3} l1 = l1. 
+*/
+
+/* Komplettering:
+ * Ni använder insert inuti kopieringen, detta är väldigt ineffektivt.
+ * Eftersom den alltid kommer att sätta in värdet längst bak i listan.
+ * Varje gång ni lägger in ett element så tar det längre tid att ta
+ * sig till slutet av listan.
+ * 
+ * Potentiell l�sning: Skapa array av pekare som pekar p� varje 
+ * element i listan. L�gg in noder bakifr�n?
+*/
 // Copy Constructor
 Sorted_List::Sorted_List(Sorted_List const& other_list)
   : head{nullptr}, size_var{0}
@@ -23,7 +54,7 @@ Sorted_List::Sorted_List(Sorted_List const& other_list)
 
 // Move Constructor
 Sorted_List::Sorted_List(Sorted_List && s_list)
-  : head{s_list.head}, size_var{s_list.size_var}
+  :head{s_list.head}, size_var{s_list.size_var}
 {
   s_list.head = nullptr;
   s_list.size_var = 0;
@@ -41,6 +72,14 @@ bool Sorted_List::is_empty() const
   return head == nullptr;
 }
 
+/* Kommentar:
+ * Jag förstår varför ni har denna funktionen. Men det är en 
+ * väldigt konstig funktion att ha till det publika gränssnittet
+ * i en sorterad lista. Vi antar ju att den alltid är sorterad.
+ * Ett annat sätt att lösa detta på skulle vara att ha en at() 
+ * funktion som kan hämta ett värde ur listan via index. Sedan
+ * hade ni kunnat göra en is_sorted funktion i testfilen.
+*/
 bool Sorted_List::is_sorted() const
 {
   Node* tmp{head};
@@ -147,11 +186,12 @@ std::string Sorted_List::to_string() const
 }
 
 
+// Kommentar: Hade kanske varit trevligt med en parameter som
+//            gör att man kan välja ström.
 void Sorted_List::print() const
 {
   std::cout << to_string() << std::endl;
 }
-
 
 void Sorted_List::clear()
 {
@@ -167,6 +207,9 @@ void Sorted_List::clear()
 
 
 // move assign
+// Kommentar: Om ni swappar pekarna mellan listorna så krävs ingen clear().
+//            Eftersom rhs snart kommer att dö. Så om rhs får this gamla
+//            data så kommer den att ta bort detta vid sin död.
 Sorted_List& Sorted_List::operator=(Sorted_List && other)
 {
   if (head != nullptr)
@@ -184,6 +227,7 @@ Sorted_List& Sorted_List::operator=(Sorted_List && other)
 
 
 // copy assign
+// Kommentar: Snyggt att ni använder copy konstruktorn här.
 Sorted_List& Sorted_List::operator=(Sorted_List const& other)
 {
   if (head != nullptr)

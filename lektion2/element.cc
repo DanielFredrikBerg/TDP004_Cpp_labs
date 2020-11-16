@@ -61,6 +61,7 @@ Element* last_elem_rec(Element* pekvariabel)
   }
 }
 
+
 // Uppgift 7 - given func:
 void insert(Element* e, int i)
 {
@@ -70,6 +71,8 @@ void insert(Element* e, int i)
 // Titta i anteckningar.
 // Denna insert lägger bara på ett element som blir
 // svårt att ta bort sen.
+
+
 
 // Uppgift 8 - Rita en figur av följande kod.
 int* data[3];

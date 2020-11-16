@@ -27,11 +27,13 @@ public:
   Sorted_List& operator=(Sorted_List && other);
 
 private:
+
+  // Kommentar: Hade ni andvänt en struct så hade medlemmarna
+  // varit public by default.
   class Node
   {
   private:
       
-    
   public:
     int value;
     Node* next;

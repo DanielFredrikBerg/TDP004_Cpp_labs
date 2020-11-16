@@ -15,6 +15,8 @@
 
 #include <random>
 
+// Komplettering: Testa även er flytttilldelning.
+
 //=======================================================================
 // Test cases
 //=======================================================================
@@ -39,7 +41,8 @@ TEST_CASE( "Insert an item in an empty list" )
     Sorted_List l{};
 
     l.insert(5);
-  
+
+    // Kommentar: REQUIRE_FALSE finns.
     REQUIRE( !(l.is_empty()) );
     REQUIRE( l.size() == 1 );
 }
