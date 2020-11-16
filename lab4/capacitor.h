@@ -6,13 +6,12 @@
 class Capacitor : public Component
 {
 public:
-  Capacitor(int capacitance);
-  double update();
+  Capacitor(std::string name, double value, Connection & positive, Connection & negative);
+  void update(double interval) override;
+  
 
 private:
-  int capacitance;
-  double calc_voltage(double const next, double const previous);
-  double calc_power(double const next, double const previous);
-}
+  double storage;
+};
 
 #endif

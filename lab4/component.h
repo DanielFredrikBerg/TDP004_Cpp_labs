@@ -7,17 +7,17 @@
 class Component
 {
 public:
-  Component();
+  Component(std::string name, double value, Connection & positive, Connection & negative);
   virtual ~Component();
-  virtual void update(double interval) = 0;
+  virtual void update(double interval);
   double calc_voltage();
-  virtual double charge_to_move() = 0;
+  virtual void move_charge(double charge_flow);
 
 protected:
   std::string name;
   double value;
-  Connection positive;
-  Connection negative;
+  Connection & positive;
+  Connection & negative;
 
 private:
   
