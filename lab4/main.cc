@@ -37,10 +37,10 @@ void simulate(std::vector<Component*> & net, int iterations, int text_rows, doub
     str_stream << std::right  << std::setw(12) << net[i] -> get_name();
   }
   str_stream << "\n" << volt_curr_str(net_size).str() << "\n";
-  int counter{0};
+  int counter{1};
   int times{1};
   int row_print_time{iterations / text_rows};
-  while (counter < iterations)
+  while (counter <= iterations)
   {
     for (long unsigned int k = 0; k < net_size; k++)
     {
