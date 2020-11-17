@@ -65,7 +65,7 @@ void simulate(std::vector<Component*> & net, int iterations, int text_rows, doub
   std::cout << str_stream.str() << std::endl;
 
 
-  std::cout << net[0] << iterations << text_rows << interval << std::endl;
+  //std::cout << net[0] << iterations << text_rows << interval << std::endl;
 } 
 
 int main() 
@@ -78,20 +78,30 @@ int main()
   net.push_back(new Resistor("R2",  4.0, p, n));
   net.push_back(new Resistor("R3",  8.0, p, n));
   net.push_back(new Resistor("R4",  12.0, p, n));
-  simulate(net, 10000, 10, 0.1);
+  simulate(net, 200000, 10, 0.01);
   
   
   // Second circuit
-  Connection p, n;
-  std::vector<Component*> net;
-  net.push_back(new Battery("Bat", 24.0, p, n));
-  net.push_back(new Resistor("R1",  6.0, p, n));
-  net.push_back(new Resistor("R2",  4.0, p, n));
-  net.push_back(new Resistor("R3",  8.0, p, n));
-  net.push_back(new Resistor("R4",  12.0, p, n));
-  simulate(net, 10000, 10, 0.1);
+  Connection p2, n2;
+  std::vector<Component*> net2;
+  net2.push_back(new Battery("Bat", 24.0, p2, n2));
+  net2.push_back(new Resistor("R1",  150.0, p2, n2));
+  net2.push_back(new Resistor("R2",  50.0, p2, n2));
+  net2.push_back(new Resistor("R3",  100.0, p2, n2));
+  net2.push_back(new Resistor("R4",  300.0, p2, n2));
+  net2.push_back(new Resistor("R5",  250.0, p2, n2));
+  simulate(net2, 200000, 10, 0.01);
   
   // Third circuit
-  
+  Connection p3, n3;
+  std::vector<Component*> net3;
+  net3.push_back(new Battery("Bat", 24.0, p3, n3));
+  net3.push_back(new Resistor("R1",  150.0, p3, n3));
+  net3.push_back(new Resistor("R2",  50.0, p3, n3));
+  net3.push_back(new Capacitor("C3",  1.0, p3, n3));
+  net3.push_back(new Resistor("R4",  300.0, p3, n3));
+  net3.push_back(new Capacitor("C5",  0.75, p3, n3));
+  simulate(net3, 200000, 10, 0.01);
+
   return 0;
 }
