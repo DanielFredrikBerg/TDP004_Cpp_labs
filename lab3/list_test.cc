@@ -15,7 +15,7 @@
 
 #include <random>
 
-// Komplettering: Testa även er flytttilldelning.
+// Komplettering: Testa även er flytttilldelning. KLART (1:a scenariot)
 
 //=======================================================================
 // Test cases
@@ -34,6 +34,39 @@ TEST_CASE( "Create an empty list" )
 // Move this comment and following #if 0 down one case at a time!
 // Make sure to close any open braces before this comment.
 // The #if 0 will disable the rest of the file.
+
+//KOMPLETTERING
+SCENARIO( "Lists can be moved" )
+{
+  GIVEN( "A list of four items" )
+  {
+    Sorted_List l{};
+    l.insert(2);
+    l.insert(2);
+    l.insert(2);
+    l.insert(2);
+    
+    WHEN( "A list is moved using the move constructor" )
+    {
+      Sorted_List l2{std::move(l)};
+      THEN(" The second list contains the first list" )
+      {
+        REQUIRE(l2.to_string() == "[2, 2, 2, 2]");
+        REQUIRE(l.is_empty()); 
+      }
+    }
+    WHEN( "A list is moved using move assignment" )
+    {
+      Sorted_List l2{};
+      l2 = std::move(l);
+      THEN(" The second list contains the first list" )
+      {
+        REQUIRE(l2.to_string() == "[2, 2, 2, 2]");
+        REQUIRE(l.is_empty()); 
+      }
+    }
+  }
+}
 
 
 TEST_CASE( "Insert an item in an empty list" ) 
@@ -438,6 +471,8 @@ SCENARIO( "Lists can be passed to functions" )
 	}
     }
 }
+
+
 
 
 // In addition you must of course verify that the list is printed
