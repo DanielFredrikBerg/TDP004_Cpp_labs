@@ -82,7 +82,14 @@ int main()
   
   
   // Second circuit
-  
+  Connection p, n;
+  std::vector<Component*> net;
+  net.push_back(new Battery("Bat", 24.0, p, n));
+  net.push_back(new Resistor("R1",  6.0, p, n));
+  net.push_back(new Resistor("R2",  4.0, p, n));
+  net.push_back(new Resistor("R3",  8.0, p, n));
+  net.push_back(new Resistor("R4",  12.0, p, n));
+  simulate(net, 10000, 10, 0.1);
   
   // Third circuit
   
