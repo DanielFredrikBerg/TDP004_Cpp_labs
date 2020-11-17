@@ -26,6 +26,12 @@ Sorted_List::Sorted_List()
  * parameter vid kopiering. List l1{1,2,3} l1 = l1. 
 */
 
+/* Komplettering 2
+ * Ni löste problemet med effektiviteten, men vi vill inte att ni använder er
+ * av standardbibliotekets vector i er lösning. Men ni får en gratis 
+ * bonuskomplettering.
+*/
+
 /* Komplettering:
  * Ni anvÃ¤nder insert inuti kopieringen, detta Ã¤r vÃ¤ldigt ineffektivt.
  * Eftersom den alltid kommer att sÃ¤tta in vÃ¤rdet lÃ¤ngst bak i listan.
@@ -43,20 +49,20 @@ Sorted_List::Sorted_List(Sorted_List const& other_list)
    {
       return;
    }
-   Node* other_ptr{other_list.head};
-   std::vector<Node*> node_ptrs{};
 
+   head = new Node{other_list.head -> value, nullptr};
+
+   Node* new_list_ptr{head};
+   Node* other_ptr{other_list.head -> next};
+   
    while (other_ptr)
    {
-     node_ptrs.push_back(other_ptr);
-     other_ptr = other_ptr -> next;
+      new_list_ptr -> next = new Node{other_ptr -> value, nullptr};
+      new_list_ptr = new_list_ptr -> next;
+      other_ptr = other_ptr -> next;
+
    }
-   unsigned long int node_ptrs_size{node_ptrs.size()};
-   for (unsigned long int i{0}; i < node_ptrs_size; ++i)
-   {
-     head = new Node{node_ptrs.back() -> value, head};
-     node_ptrs.pop_back();
-   }
+
    size_var = other_list.size_var;
 } 
 
