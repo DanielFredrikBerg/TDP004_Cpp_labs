@@ -10,9 +10,15 @@ void Capacitor::move_charge(double charge_flow)
   storage += charge_flow;
 }
 
+double Capacitor::calc_current()
+{
+  return value * (Component::calc_voltage() - storage);
+}
+
 void Capacitor::update(double interval)
 {
-  double charge{value * (Component::calc_voltage() - storage) * interval};
-  Capacitor::move_charge(charge);
-
+  double charge_flow{calc_current() * interval};
+  move_charge(charge_flow);
 }
+
+

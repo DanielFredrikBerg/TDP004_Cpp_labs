@@ -6,9 +6,14 @@ Resistor::Resistor(std::string name, double value, Connection & positive, Connec
   : Component{name, value, positive, negative}
 {}
 
+double Resistor::calc_current()
+{
+  return Component::calc_voltage() / value;
+}
+
 void Resistor::update(double interval)
 {
-  double charge_flow{Component::calc_voltage() / value * interval}; 
+  double charge_flow{calc_current() * interval}; 
   Component::move_charge(charge_flow);
 }
 

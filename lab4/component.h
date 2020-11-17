@@ -9,10 +9,13 @@ class Component
 public:
   Component(std::string name, double value, Connection & positive, Connection & negative);
   virtual ~Component() = default;
-  virtual void update(double interval);
+  std::string get_name();
+  virtual void update(double interval) = 0;
+  virtual double calc_current() = 0;  
   double calc_voltage();
   virtual void move_charge(double charge_flow);
 
+  
 protected:
   std::string name;
   double value;

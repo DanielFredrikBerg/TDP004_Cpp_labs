@@ -43,13 +43,21 @@ Sorted_List::Sorted_List(Sorted_List const& other_list)
    {
       return;
    }
-   Node* tmp{other_list.head};
-   
-   while (tmp != nullptr)
+   Node* other_ptr{other_list.head};
+   std::vector<Node*> node_ptrs{};
+
+   while (other_ptr)
    {
-      insert(tmp->value);
-      tmp = tmp->next;
+     node_ptrs.push_back(other_ptr);
+     other_ptr = other_ptr -> next;
    }
+   unsigned long int node_ptrs_size{node_ptrs.size()};
+   for (unsigned long int i{0}; i < node_ptrs_size; ++i)
+   {
+     head = new Node{node_ptrs.back() -> value, head};
+     node_ptrs.pop_back();
+   }
+   size_var = other_list.size_var;
 } 
 
 // Move Constructor
@@ -82,18 +90,18 @@ bool Sorted_List::is_empty() const
 */
 bool Sorted_List::is_sorted() const
 {
-  Node* tmp{head};
-  if (tmp == nullptr)
+  Node* node_ptr{head};
+  if (node_ptr == nullptr)
   {
     return true;
   }
-  while (tmp -> next != nullptr)
+  while (node_ptr -> next != nullptr)
   {
-    if (tmp -> value > tmp -> next -> value)
+    if (node_ptr -> value > node_ptr -> next -> value)
     {
       return false;
     }
-    tmp = tmp -> next;
+    node_ptr = node_ptr -> next;
   }
   return true;
 }
@@ -125,26 +133,26 @@ void Sorted_List::remove(int const value)
     return;
   }
 
-  Node* tmp{head};
+  Node* node_ptr{head};
   if (first_value() == value)
   {
     head = head -> next;
-    delete tmp;
+    delete node_ptr;
     --size_var;
     return;
   }  
 
-  while (tmp -> next) 
+  while (node_ptr -> next) 
   {
-    if (tmp -> next -> value == value)
+    if (node_ptr -> next -> value == value)
     {
-      Node* node_rem{tmp -> next};
-      tmp -> next = tmp -> next -> next;
+      Node* node_rem{node_ptr -> next};
+      node_ptr -> next = node_ptr -> next -> next;
       delete node_rem;
       --size_var;
       return;
     }
-    tmp = tmp -> next;
+    node_ptr = node_ptr -> next;
   }
 }
 
@@ -171,15 +179,15 @@ void Sorted_List::Node::insert(int const value)
 std::string Sorted_List::to_string() const
 {
   std::string str{"["};
-  Node* tmp{head};
-  while (tmp != nullptr)
+  Node* node_ptr{head};
+  while (node_ptr != nullptr)
   {
-    str += std::to_string(tmp -> value);
-    if (tmp -> next != nullptr)
+    str += std::to_string(node_ptr -> value);
+    if (node_ptr -> next != nullptr)
     {
       str += ", ";
     }
-    tmp = tmp -> next;
+    node_ptr = node_ptr -> next;
   }
   str += "]";
   return str;
@@ -196,12 +204,12 @@ void Sorted_List::print() const
 void Sorted_List::clear()
 {
   size_var = 0;
-  Node* tmp{head};
+  Node* node_ptr{head};
   while (head != nullptr)
   {
     head = head -> next;
-    delete tmp;
-    tmp = head;
+    delete node_ptr;
+    node_ptr = head;
   }
 }
 

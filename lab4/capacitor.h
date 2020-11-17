@@ -10,7 +10,8 @@ public:
 
   void update(double interval) override;
   void move_charge(double charge_flow) override;
-
+  double calc_current() override;
+  
 private:
   double storage;
 };
