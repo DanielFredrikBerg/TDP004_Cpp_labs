@@ -5,7 +5,7 @@
 
 struct Connection
 {
-  double charge;
+  double charge{};
 };
 
 class Component
