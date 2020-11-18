@@ -9,7 +9,7 @@ Resistor::Resistor(std::string name, double value,\
 
 double Resistor::calc_current()
 {
-  return Component::calc_voltage() / value;
+  return calc_voltage() / value;
 }
 
 void Resistor::update(double interval)
