@@ -2,7 +2,11 @@
 #define COMPONENT_H
 
 #include <string>
-#include "connection.h"
+
+struct Connection
+{
+  double charge;
+};
 
 class Component
 {

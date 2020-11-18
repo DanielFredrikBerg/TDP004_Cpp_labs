@@ -12,11 +12,7 @@ std::string Component::get_name()
 
 double Component::calc_voltage()
 {
-  if (positive.charge > negative.charge)
-  {
-    return std::abs(positive.charge - negative.charge);
-  }
-  return std::abs(negative.charge - positive.charge); 
+  return std::abs(positive.charge - negative.charge);
 }
 
 void Component::move_charge(double const charge_flow)
