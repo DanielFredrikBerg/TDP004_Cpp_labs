@@ -8,7 +8,7 @@ Capacitor::Capacitor(std::string name, double value,\
 
 double Capacitor::calc_current()
 {
-  return value * (Component::calc_voltage() - storage);
+  return value * (calc_voltage() - storage);
 }
 
 void Capacitor::update(double interval)
