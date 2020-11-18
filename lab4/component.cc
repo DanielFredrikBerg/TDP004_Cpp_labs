@@ -1,7 +1,8 @@
 #include "component.h"
 
 
-Component::Component(std::string name, double value, Connection & positive, Connection & negative)
+Component::Component(std::string name, double value,\
+                     Connection & positive, Connection & negative)
   : name{name}, value{value}, positive{positive}, negative{negative}
 {}
 

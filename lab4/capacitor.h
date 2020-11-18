@@ -6,10 +6,10 @@
 class Capacitor : public Component
 {
 public:
-  Capacitor(std::string name, double value, Connection & positive, Connection & negative);
+  Capacitor(std::string name, double value, \
+            Connection & positive, Connection & negative);
 
   void update(double interval) override;
-  void move_charge(double charge_flow) override;
   double calc_current() override;
   
 private:

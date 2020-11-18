@@ -6,11 +6,10 @@
 #include "capacitor.h"
 #include "resistor.h"
 
-std::stringstream volt_curr_str(long unsigned int occ)
+std::string volt_curr_str(long unsigned int occ)
 {
   std::stringstream str_stream;
   std::string val;
-  int w{6};
   for (long unsigned int i = 1; i <= occ * 2; i++)
   {
     if (i % 2 == 0)
@@ -21,12 +20,13 @@ std::stringstream volt_curr_str(long unsigned int occ)
     {
       val = "Volt";
     }
-    str_stream << std::right << std::setw(w) << val;
+    str_stream << std::right << std::setw(6) << val;
   }
-  return str_stream;
+  return str_stream.str();
 } 
 
-void simulate(std::vector<Component*> & net, int iterations, int text_rows, double interval)
+void simulate(std::vector<Component*> & net, \
+              int iterations, int text_rows, double interval)
 {
   std::stringstream str_stream;
   long unsigned int net_size = net.size();
@@ -34,36 +34,27 @@ void simulate(std::vector<Component*> & net, int iterations, int text_rows, doub
   {
     str_stream << std::right  << std::setw(12) << net[i] -> get_name();
   }
-  str_stream << "\n" << volt_curr_str(net_size).str() << "\n";
-  int counter{1};
-  int times{1};
+  str_stream << "\n" << volt_curr_str(net_size) << "\n";
   int row_print_time{iterations / text_rows};
-  while (counter <= iterations)
+  for (int i{1}; i <= iterations; i++)
   {
     for (long unsigned int k = 0; k < net_size; k++)
     {
       net[k] -> update(interval);
     }
-    if (counter % row_print_time == 0)
+    if (i % row_print_time == 0)
     {
-      times++;
-      // Ska lägga till en rad i str.
       for (long unsigned int k = 0; k < net_size; k++)
       {
         str_stream << std::right  << std::setw(6) << std::fixed 
                    << std::setprecision(2) << net[k] -> calc_voltage() 
-                   << std::setw(6) 
-                   << net[k] -> calc_current();
+                   << std::setw(6) << net[k] -> calc_current();
       }
       str_stream << "\n";
     }
-    counter++;
   }
 
   std::cout << str_stream.str() << std::endl;
-
-
-  //std::cout << net[0] << iterations << text_rows << interval << std::endl;
 } 
 
 int main() 

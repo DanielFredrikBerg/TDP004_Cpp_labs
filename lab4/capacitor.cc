@@ -1,14 +1,10 @@
 #include "capacitor.h"
 
-Capacitor::Capacitor(std::string name, double value, Connection & positive, Connection & negative)
-  : Component{name, value, positive, negative}
+Capacitor::Capacitor(std::string name, double value,\
+                     Connection & positive, Connection & negative)
+  : Component{name, value, positive, negative}, storage{0}
 {}
 
-void Capacitor::move_charge(double charge_flow)
-{
-  Component::move_charge(charge_flow);
-  storage += charge_flow;
-}
 
 double Capacitor::calc_current()
 {
@@ -19,6 +15,7 @@ void Capacitor::update(double interval)
 {
   double charge_flow{calc_current() * interval};
   move_charge(charge_flow);
+  storage += charge_flow;
 }
 
 

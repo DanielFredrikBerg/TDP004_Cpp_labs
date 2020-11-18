@@ -2,7 +2,8 @@
 
 /* Flyttar laddningspartiklar från sin mest positiva kopplingspunkt 
    till sin minst positiva kopplingspunkt */
-Resistor::Resistor(std::string name, double value, Connection & positive, Connection & negative)
+Resistor::Resistor(std::string name, double value,\
+                   Connection & positive, Connection & negative)
   : Component{name, value, positive, negative}
 {}
 
