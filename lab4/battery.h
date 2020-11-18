@@ -11,9 +11,6 @@ public:
   double calc_current() override;
 
 private:
-  // int charge;
-  // double calc_voltage(double const next, double const previous);
-  // double calc_power(double const next, double const previous);
 };
 
 
