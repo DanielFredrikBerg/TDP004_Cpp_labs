@@ -15,6 +15,6 @@ double Resistor::calc_current()
 void Resistor::update(double interval)
 {
   double charge_flow{calc_current() * interval}; 
-  Component::move_charge(charge_flow);
+  move_charge(charge_flow);
 }
 
