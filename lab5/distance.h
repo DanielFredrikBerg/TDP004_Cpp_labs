@@ -1,11 +1,16 @@
-template <typename T>
-Distance<T>::Distance(T const& center)
-  : center{center}
-{}
+#ifndef DISTANCE_H
+#define DISTANCE_H
 
 template <typename T>
-bool Less<T>::compare(T const& arg_one, T const& arg_two)
+class Distance
 {
-  // Returnera true om arg_one ligger närmare distance än arg_two.
-   return std::abs(arg_one - center) < std::abs(arg_two - center);
-}
+public:
+   Distance(T);  
+   bool compare(T const& arg_one, T const& arg_two);
+
+private:
+  T center{};
+};
+
+#include "distance.tcc"
+#endif

@@ -6,7 +6,7 @@
 
 using namespace std;
 
-template <typename T, typename comp>
+template <typename T, typename comp=Less<T>>
 sorted_array<T, comp>::sorted_array(initializer_list<T> list)
   : data{}, comparator{Less<T>{}}
 {
@@ -16,7 +16,17 @@ sorted_array<T, comp>::sorted_array(initializer_list<T> list)
     }
 }
 
-template <typename T, typename comp>
+template <typename T, typename comp=Less<T>>
+sorted_array<T, comp>::sorted_array(initializer_list<T> list, comp comparator)
+  : data{}, comparator{comparator}
+{
+    for (T val : list)
+    {
+        insert(val);
+    }
+}
+
+template <typename T, typename comp=Less<T>>
 void sorted_array<T, comp>::insert(T value)
 {
     data.push_back(value);
@@ -33,7 +43,7 @@ void sorted_array<T, comp>::insert(T value)
     }
 }
 
-template <typename T, typename comp>
+template <typename T, typename comp=Less<T>>
 T sorted_array<T, comp>::erase(int index)
 {
     if (index < 0 || index >= size())
@@ -47,37 +57,37 @@ T sorted_array<T, comp>::erase(int index)
     return value;
 }
 
-template <typename T, typename comp>
+template <typename T, typename comp=Less<T>>
 T & sorted_array<T, comp>::operator[](int index)
 {
     return data[index];
 }
 
-template <typename T, typename comp>
+template <typename T, typename comp=Less<T>>
 T sorted_array<T, comp>::operator[](int index) const
 {
     return data[index];
 }
 
-template <typename T, typename comp>
+template <typename T, typename comp=Less<T>>
 T & sorted_array<T, comp>::at(int index)
 {
     return data.at(index);
 }
 
-template <typename T, typename comp>
+template <typename T, typename comp=Less<T>>
 T sorted_array<T, comp>::at(int index) const
 {
     return data.at(index);
 }
 
-template <typename T, typename comp>
+template <typename T, typename comp=Less<T>>
 int sorted_array<T, comp>::size() const
 {
     return static_cast<int>(data.size());
 }
 
-template <typename T, typename comp>
+template <typename T, typename comp=Less<T>>
 ostream & operator<<(ostream & os, sorted_array<T, comp> const & array)
 {
     if (array.size() == 0)

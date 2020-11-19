@@ -7,7 +7,7 @@
 
 #include "less.h"
 
-template <typename T, typename comp>
+template <typename T, typename comp=Less<T>>
 class sorted_array
 {
 
@@ -33,7 +33,7 @@ private:
 
 };
 
-template <typename T, typename comp>
+template <typename T, typename comp=Less<T>>
 std::ostream & operator<<(std::ostream & os, sorted_array<T, comp> const & array);
 
 #include "sorted_array.tcc"
