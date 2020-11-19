@@ -1,15 +1,13 @@
-
-
 #include <utility>
 #include <stdexcept>
 
 #include "less.h"
-#include "distance.h"
+
 using namespace std;
 
 template <typename T>
 sorted_array<T>::sorted_array(initializer_list<T> list)
-  : data{}, comparator{Less<T>{}}, center{Distance<T>{}}
+  : data{}, comparator{Less<T>{}}
 {
     for (T val : list)
     {

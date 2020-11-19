@@ -6,32 +6,29 @@
 #include <ostream>
 
 #include "less.h"
-#include "distance.h"
 
 template <typename T>
 class sorted_array
 {
 
 public:
-
-    sorted_array() = default;
-    sorted_array(std::initializer_list<T> list);
-
-    void insert(T value);
-    T erase(int index);
-
-    T & operator[](int index);
-    T operator[](int index) const;
-
-    T & at(int index);
-    T at(int index) const;
-
-    int size() const;
-
+  sorted_array() = default;
+  sorted_array(std::initializer_list<T> list); 
+  
+  void insert(T value);
+  T erase(int index);
+  
+  T & operator[](int index);
+  T operator[](int index) const;
+  
+  T & at(int index);
+  T at(int index) const;
+  
+  int size() const;
+  
 private:
   std::vector<T> data{};
   Less<T> comparator{};
-  Distance<T> center{};
 
 };
 
