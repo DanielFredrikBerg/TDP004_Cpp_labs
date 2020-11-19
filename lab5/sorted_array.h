@@ -5,6 +5,9 @@
 #include <initializer_list>
 #include <ostream>
 
+#include "less.h"
+#include "distance.h"
+
 template <typename T>
 class sorted_array
 {
@@ -26,14 +29,15 @@ public:
     int size() const;
 
 private:
-
-    std::vector<T> data{};
+  std::vector<T> data{};
+  Less<T> comparator{};
+  Distance<T> center{};
 
 };
 
 template <typename T>
 std::ostream & operator<<(std::ostream & os, sorted_array<T> const & array);
 
-#include "sorted_array.cc"
+#include "sorted_array.tcc"
 
 #endif//SORTED_ARRAY_H

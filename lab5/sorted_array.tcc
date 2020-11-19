@@ -3,11 +3,13 @@
 #include <utility>
 #include <stdexcept>
 
+#include "less.h"
+#include "distance.h"
 using namespace std;
 
 template <typename T>
 sorted_array<T>::sorted_array(initializer_list<T> list)
-    : data{}
+  : data{}, comparator{Less<T>{}}, center{Distance<T>{}}
 {
     for (T val : list)
     {
@@ -21,7 +23,7 @@ void sorted_array<T>::insert(T value)
     data.push_back(value);
     for (int i {size() - 1}; i > 0; --i)
     {
-        if (data[i] < data[i-1])
+      if (comparator.Less<T>::compare(data[i],  data[i-1]))
         {
             swap(data[i-1], data[i]);
         }
