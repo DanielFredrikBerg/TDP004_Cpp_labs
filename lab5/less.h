@@ -6,7 +6,6 @@ class Less
 {
   public:
   bool compare(T const& arg_one, T const& arg_two);
-  bool compare(T const& arg_one, T const& arg_two, T const& distance);
 
   private:
 };
