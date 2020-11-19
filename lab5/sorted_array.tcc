@@ -2,11 +2,12 @@
 #include <stdexcept>
 
 #include "less.h"
+#include "distance.h"
 
 using namespace std;
 
-template <typename T>
-sorted_array<T>::sorted_array(initializer_list<T> list)
+template <typename T, typename comp>
+sorted_array<T, comp>::sorted_array(initializer_list<T> list)
   : data{}, comparator{Less<T>{}}
 {
     for (T val : list)
@@ -15,8 +16,8 @@ sorted_array<T>::sorted_array(initializer_list<T> list)
     }
 }
 
-template <typename T>
-void sorted_array<T>::insert(T value)
+template <typename T, typename comp>
+void sorted_array<T, comp>::insert(T value)
 {
     data.push_back(value);
     for (int i {size() - 1}; i > 0; --i)
@@ -32,8 +33,8 @@ void sorted_array<T>::insert(T value)
     }
 }
 
-template <typename T>
-T sorted_array<T>::erase(int index)
+template <typename T, typename comp>
+T sorted_array<T, comp>::erase(int index)
 {
     if (index < 0 || index >= size())
         throw std::out_of_range{"unable to erase; index is out of bounds."};
@@ -46,38 +47,38 @@ T sorted_array<T>::erase(int index)
     return value;
 }
 
-template <typename T>
-T & sorted_array<T>::operator[](int index)
+template <typename T, typename comp>
+T & sorted_array<T, comp>::operator[](int index)
 {
     return data[index];
 }
 
-template <typename T>
-T sorted_array<T>::operator[](int index) const
+template <typename T, typename comp>
+T sorted_array<T, comp>::operator[](int index) const
 {
     return data[index];
 }
 
-template <typename T>
-T & sorted_array<T>::at(int index)
+template <typename T, typename comp>
+T & sorted_array<T, comp>::at(int index)
 {
     return data.at(index);
 }
 
-template <typename T>
-T sorted_array<T>::at(int index) const
+template <typename T, typename comp>
+T sorted_array<T, comp>::at(int index) const
 {
     return data.at(index);
 }
 
-template <typename T>
-int sorted_array<T>::size() const
+template <typename T, typename comp>
+int sorted_array<T, comp>::size() const
 {
     return static_cast<int>(data.size());
 }
 
-template <typename T>
-ostream & operator<<(ostream & os, sorted_array<T> const & array)
+template <typename T, typename comp>
+ostream & operator<<(ostream & os, sorted_array<T, comp> const & array)
 {
     if (array.size() == 0)
     {

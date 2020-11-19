@@ -7,13 +7,14 @@
 
 #include "less.h"
 
-template <typename T>
+template <typename T, typename comp>
 class sorted_array
 {
 
 public:
   sorted_array() = default;
   sorted_array(std::initializer_list<T> list); 
+  sorted_array(std::initializer_list<T> list, comp comparator); 
   
   void insert(T value);
   T erase(int index);
@@ -32,8 +33,8 @@ private:
 
 };
 
-template <typename T>
-std::ostream & operator<<(std::ostream & os, sorted_array<T> const & array);
+template <typename T, typename comp>
+std::ostream & operator<<(std::ostream & os, sorted_array<T, comp> const & array);
 
 #include "sorted_array.tcc"
 

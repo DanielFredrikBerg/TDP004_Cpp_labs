@@ -2,6 +2,7 @@
 
 #include "sorted_array.h"
 #include "less.h"
+#include "distance.h"
 
 
 #include <sstream>
@@ -93,7 +94,7 @@ TEST_CASE("initialization int")
 
 TEST_CASE("initialization double")
 {
-    sorted_array<double> a{17, 9, 5, 2, -100};
+    sorted_array<double> a{17.0, 9.0, 5.0, 2.0, -100.0};
     CHECK (a.size() == 5);
     CHECK (a[0] == -100);
     CHECK (a[1] == 2);
@@ -146,9 +147,9 @@ TEST_CASE("const array int")
     CHECK_THROWS (a.at(5));
 }
 
-TEST_CASE("const array double")
+TEST_CASE("const array int, testing distance")
 {
-    sorted_array<double> const a{1, 2, 3, 4, 5};
+    sorted_array<int> const a{1, 2, 3, 4, 5};
 
     CHECK (a.size() == 5);
     CHECK (a[0] == 1);
@@ -160,6 +161,24 @@ TEST_CASE("const array double")
     CHECK (a[3] == 4);
     CHECK (a[3] == a.at(3));
     CHECK (a[4] == 5);
+    CHECK (a[4] == a.at(4));
+    CHECK_THROWS (a.at(5));
+}
+
+TEST_CASE("const array double")
+{
+    sorted_array<double> const a{1.0, 2.0, 3.0, 4.0, 5.0};
+
+    CHECK (a.size() == 5.0);
+    CHECK (a[0] == 1.0);
+    CHECK (a[0] == a.at(0));
+    CHECK (a[1] == 2.0);
+    CHECK (a[1] == a.at(1));
+    CHECK (a[2] == 3.0);
+    CHECK (a[2] == a.at(2));
+    CHECK (a[3] == 4.0);
+    CHECK (a[3] == a.at(3));
+    CHECK (a[4] == 5.0);
     CHECK (a[4] == a.at(4));
     CHECK_THROWS (a.at(5));
 }
