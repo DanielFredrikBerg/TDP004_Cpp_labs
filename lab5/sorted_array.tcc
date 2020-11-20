@@ -8,7 +8,7 @@ using namespace std;
 
 template <typename T, typename comp=Less<T>>
 sorted_array<T, comp>::sorted_array(initializer_list<T> list)
-  : data{}, comparator{Less<T>{}}
+  : data{}, comparator{comp{}}
 {
     for (T val : list)
     {
@@ -18,7 +18,7 @@ sorted_array<T, comp>::sorted_array(initializer_list<T> list)
 
 template <typename T, typename comp=Less<T>>
 sorted_array<T, comp>::sorted_array(initializer_list<T> list, comp comparator)
-  : data{}, comparator{comparator}
+  : data{}, comparator{comparator{}}, center{Distance<T>{}}
 {
     for (T val : list)
     {
