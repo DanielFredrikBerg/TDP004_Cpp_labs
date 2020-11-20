@@ -30,7 +30,6 @@ public:
 private:
   std::vector<T> data{};
   comp comparator{};
-  T center{};
 };
 
 template <typename T, typename comp=Less<T>>
