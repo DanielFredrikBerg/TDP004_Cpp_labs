@@ -29,8 +29,8 @@ public:
   
 private:
   std::vector<T> data{};
-  Less<T> comparator{};
-  Distance<T> center{};
+  comp comparator{};
+  T center{};
 };
 
 template <typename T, typename comp=Less<T>>

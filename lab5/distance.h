@@ -5,7 +5,7 @@ template <typename T>
 class Distance
 {
 public:
-   Distance(T);  
+   Distance(T const& center);  
    bool compare(T const& arg_one, T const& arg_two);
 
 private:

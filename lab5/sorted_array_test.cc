@@ -149,7 +149,8 @@ TEST_CASE("const array int")
 
 TEST_CASE("const array int, testing distance")
 {
-    sorted_array<int> const a{1, 2, 3, 4, 5};
+  Distance<int> d{3};
+  sorted_array<int, Distance<int>> const a{{1, 2, 3, 4, 5}, d};
 
     CHECK (a.size() == 5);
     CHECK (a[0] == 1);
