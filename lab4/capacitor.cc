@@ -1,14 +1,14 @@
 #include "capacitor.h"
 
-Capacitor::Capacitor(std::string name, double value,\
+Capacitor::Capacitor(std::string const& name, double value,\
                      Connection & positive, Connection & negative)
-  : Component{name, value, positive, negative}, storage{0}
+  : Component{name, positive, negative}, capacitance{value}, storage{0}
 {}
 
 
 double Capacitor::calc_current()
 {
-  return value * (calc_voltage() - storage);
+  return capacitance * (calc_voltage() - storage);
 }
 
 void Capacitor::update(double interval)

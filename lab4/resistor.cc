@@ -2,14 +2,14 @@
 
 /* Flyttar laddningspartiklar från sin mest positiva kopplingspunkt 
    till sin minst positiva kopplingspunkt */
-Resistor::Resistor(std::string name, double value,\
-                   Connection & positive, Connection & negative)
-  : Component{name, value, positive, negative}
+Resistor::Resistor(std::string const& name, double value, \
+				   Connection & positive, Connection & negative)
+  : Component{name, positive, negative}, resistance{value}
 {}
 
 double Resistor::calc_current()
 {
-  return calc_voltage() / value;
+  return calc_voltage() / resistance;
 }
 
 void Resistor::update(double interval)

@@ -9,6 +9,7 @@
 std::string volt_curr_str(long unsigned int occ)
 {
   std::stringstream str_stream;
+  str_stream << std::right;
   std::string val;
   for (long unsigned int i = 1; i <= occ * 2; i++)
   {
@@ -20,21 +21,25 @@ std::string volt_curr_str(long unsigned int occ)
     {
       val = "Volt";
     }
-    str_stream << std::right << std::setw(6) << val;
+    str_stream << std::setw(6) << val;
   }
   return str_stream.str();
 } 
 
-void simulate(std::vector<Component*> & net, \
+void simulate(std::vector<Component*> const& net, \
               int iterations, int text_rows, double interval)
 {
   std::stringstream str_stream;
+  str_stream << std::right << std::fixed;
+
   long unsigned int net_size = net.size();
   for (long unsigned int i = 0; i < net_size; i++)
   {
-    str_stream << std::right  << std::setw(12) << net[i] -> get_name();
+    str_stream << std::setw(12) << net[i] -> get_name();
   }
+
   str_stream << "\n" << volt_curr_str(net_size) << "\n";
+
   int row_print_time{iterations / text_rows};
   for (int i{1}; i <= iterations; i++)
   {
@@ -46,9 +51,9 @@ void simulate(std::vector<Component*> & net, \
     {
       for (long unsigned int k = 0; k < net_size; k++)
       {
-        str_stream << std::right  << std::setw(6) << std::fixed 
-                   << std::setprecision(2) << net[k] -> calc_voltage() 
-                   << std::setw(6) << net[k] -> calc_current();
+        str_stream << std::setw(6) << std::setprecision(2) 
+                   << net[k] -> calc_voltage() << std::setw(6) 
+                   << net[k] -> calc_current();
       }
       str_stream << "\n";
     }
@@ -56,6 +61,15 @@ void simulate(std::vector<Component*> & net, \
 
   std::cout << str_stream.str() << std::endl;
 } 
+
+void clear_net(std::vector<Component*> & net)
+{
+  for (Component* comp : net)
+  {
+    delete comp;
+  }
+  net.clear();
+}
 
 int main(int argc, char* argv[]) 
 {
@@ -118,28 +132,31 @@ int main(int argc, char* argv[])
   net.push_back(new Resistor("R4",  12.0, r124, n));
   simulate(net, iterations, text_rows, interval);
   
-  
+  clear_net(net);
+
   // Second circuit
   Connection p2, n2, l2, r2;
-  std::vector<Component*> net2;
-  net2.push_back(new Battery("Bat", voltage, p2, n2));
-  net2.push_back(new Resistor("R1",  150.0, p2, l2));
-  net2.push_back(new Resistor("R2",  50.0, p2, r2));
-  net2.push_back(new Resistor("R3",  100.0, l2, r2));
-  net2.push_back(new Resistor("R4",  300.0, l2, n2));
-  net2.push_back(new Resistor("R5",  250.0, r2, n2));
-  simulate(net2, iterations, text_rows, interval);
+  net.push_back(new Battery("Bat", voltage, p2, n2));
+  net.push_back(new Resistor("R1",  150.0, p2, l2));
+  net.push_back(new Resistor("R2",  50.0, p2, r2));
+  net.push_back(new Resistor("R3",  100.0, l2, r2));
+  net.push_back(new Resistor("R4",  300.0, l2, n2));
+  net.push_back(new Resistor("R5",  250.0, r2, n2));
+  simulate(net, iterations, text_rows, interval);
   
+  clear_net(net);
+
   // Third circuit
   Connection p3, n3, l3, r3;
-  std::vector<Component*> net3;
-  net3.push_back(new Battery("Bat", voltage, p3, n3));
-  net3.push_back(new Resistor("R1",  150.0, p3, l3));
-  net3.push_back(new Resistor("R2",  50.0, p3, r3));
-  net3.push_back(new Capacitor("C3",  1.0, l3, r3));
-  net3.push_back(new Resistor("R4",  300.0, l3, n3));
-  net3.push_back(new Capacitor("C5",  0.75, r3, n3));
-  simulate(net3, iterations, text_rows, interval);
+  net.push_back(new Battery("Bat", voltage, p3, n3));
+  net.push_back(new Resistor("R1",  150.0, p3, l3));
+  net.push_back(new Resistor("R2",  50.0, p3, r3));
+  net.push_back(new Capacitor("C3",  1.0, l3, r3));
+  net.push_back(new Resistor("R4",  300.0, l3, n3));
+  net.push_back(new Capacitor("C5",  0.75, r3, n3));
+  simulate(net, iterations, text_rows, interval);
+
+  clear_net(net);
 
   return 0;
 }
