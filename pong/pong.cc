@@ -17,7 +17,7 @@ Pong::Pong()
   	// create ball
   	srand (time(NULL));
   	int x_pos{std::min(2 + rand() % c.getWidth(), c.getWidth() - 2)};
-  	int y_pos{2 + rand() % c.getHeight() / 2};
+  	int y_pos{6 + rand() % c.getHeight() / 2};
   	int x_velocity{rand() % 2 == 0 ? -1 : 1};
   	int y_velocity{rand() % 2 == 0 ? -1 : 1};
   	b = Ball{x_pos, y_pos, x_velocity, y_velocity};
@@ -32,6 +32,7 @@ void Pong::draw_game()
 	c.put('+');
 	c.setPos(c.getWidth() - 1, 4);
 	c.put('+');
+        c.setForegroundColor(COLOR_GREEN);
 	c.setPos(0, c.getHeight() - 4);
 	c.put('+');
 	c.setPos(c.getWidth()- 1, c.getHeight() - 4);
