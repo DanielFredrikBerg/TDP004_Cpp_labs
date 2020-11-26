@@ -116,23 +116,26 @@ int main(int argc, char* argv[])
 	// print valid words in alphabetical order with count
 	if (argv[2][1] == 'a')
 	{
-		// sort words
-		std::sort(words.begin(), words.end());
+		// copy words into a map<string, int>
+		std::map<std::string, int> words_map;
+		transform(words.begin(), words.end(), inserter(words_map, words_map.begin()),
+			[&words] (std::string const& str)
+			{
+				return make_pair(str, std::count(words.begin(), words.end(), str));
+			});
 
-		// create vector of unique words
-		std::vector<std::string> unique_words;
-		std::unique_copy(words.begin(), words.end(), std::back_inserter(unique_words));
+		// clear vector
+		words.clear();
 
-		// add count to unique words
-		std::transform(unique_words.begin(), unique_words.end(), unique_words.begin(), 
-					   [&words](std::string str)
-					   {
-					   		int word_cnt = std::count(words.begin(), words.end(), str);
-					   		return str += " " + std::to_string(word_cnt); 
-					   });
+		// copy words + count from map to vector
+		transform(words_map.begin(), words_map.end(), back_inserter(words), 
+				  [&words_map] (std::pair<std::string, int> const& p) 
+				  {
+				  	return p.first + " " + std::to_string(p.second);
+				  });
 
-		// print unique words + count
-		std::copy(unique_words.begin(), unique_words.end(), 
+		// print vector with words + count
+		std::copy(words.begin(), words.end(), 
 				  std::ostream_iterator<std::string>(std::cout, "\n"));
 	} 
 	else if (argv[2][1] == 'f')
