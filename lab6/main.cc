@@ -10,6 +10,7 @@
 #include <locale>
 #include <map>
 
+
 bool is_valid(std::string const& str)
 {
    // words shorter than 3 characters are not valid
@@ -20,7 +21,7 @@ bool is_valid(std::string const& str)
 
    // KlaAr36: Föredra att använda .at() före [] för att få felhantering
    // words starting/ending with a '-' are not valid
-   if (str[0] == '-' || str[str.length() - 1] == '-')
+   if (str.at(0) == '-' || str.at(str.length() - 1) == '-')
    {
       return false;
    }
@@ -58,7 +59,7 @@ std::string clean_word(std::string & str)
    //   räcker inte att näst sista är ett '\''
    
    // adjust index for last letter in case it ends with 's
-   if (str[last - 1] == '\'')
+   if (str.at(last-1) == '\'')
    {
       last -= 2;
    }
