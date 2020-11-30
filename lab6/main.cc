@@ -18,6 +18,7 @@ bool is_valid(std::string const& str)
       return false;
    }
 
+   // KlaAr36: Föredra att använda .at() före [] för att få felhantering
    // words starting/ending with a '-' are not valid
    if (str[0] == '-' || str[str.length() - 1] == '-')
    {
@@ -30,6 +31,16 @@ bool is_valid(std::string const& str)
       return false;
    }
 
+   // KlaAr36: Mycket bra att ni fått med även rätt locale!
+   //   Tyvärr fungerar det ändå inte för svenska tecken :-(   
+   //   Åtminstone inte portabelt, och det finns inget trivialt
+   //   portabelt sätt att lösa den problematiken i dagsläget :-(
+   // Överkurs:
+   // Ett fösök att hantera utf8-konvertering:
+   //   https://en.cppreference.com/w/cpp/locale/codecvt_utf8
+   // Men det är nyligen (c++17) deprecated:
+   //   http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/p0618r0.html
+   
    // words that contain other characters than '-' or letters are not valid
    std::locale swe_loc("sv_SE.UTF-8");
    return std::all_of(str.begin(), str.end(), 
@@ -43,11 +54,15 @@ std::string clean_word(std::string & str)
    auto first{str.find_first_not_of("\"'(")};
    auto last{str.find_last_not_of("!?;,:.\"')")};
 
+   // KlaAr36: Komplettering: Sista tecknet måste vara ett 's', det
+   //   räcker inte att näst sista är ett '\''
+   
    // adjust index for last letter in case it ends with 's
    if (str[last - 1] == '\'')
    {
       last -= 2;
    }
+   // KlaAr36: Snygg lösning!
    return str.substr(first, last - first + 1);
 }
 
@@ -86,7 +101,7 @@ int main(int argc, char* argv[])
    }
 
    // open file
-   std::ifstream in_stream;
+   std::ifstream in_stream; // KlaAr36: Filen går att öppna direkt i konstruktorn
    in_stream.open(argv[1]);
    if (!in_stream.is_open())
    {
@@ -99,6 +114,16 @@ int main(int argc, char* argv[])
    std::copy(std::istream_iterator<std::string>{in_stream}, 
              std::istream_iterator<std::string>{}, std::back_inserter(words));
 
+   // KlaAr36: Trivia: Ni kan ha funderat på om det finns ett sätt att
+   //   göra transform och remove_if i ett svep. Det finns ingen
+   //   algoritm "transform_if" (diskussion om det finns att läsa på
+   //   stack overflow). Däremot kommer i 2020-revisionen av C++
+   //   standarden det vi kallar Ranges där vi (när kompilatorerna
+   //   hunnit ikapp) kan "pipa" vår data på liknande sätt som i
+   //   terminalen:
+   //      words | transform(clean_words) | remove_if(invalid)
+   //   Ranges i c++20-standarden bygger på implementation Boost.Ranges
+   
    // clean potential words
    std::transform(words.begin(), words.end(), words.begin(), 
                   [](std::string & str) { return clean_word(str); });
@@ -121,16 +146,35 @@ int main(int argc, char* argv[])
    // print valid words in alphabetical order with count
    if (argv[2][1] == 'a')
    {
+      // KlaAr36: Bra! Det är inte ofta vi ser någon som får till
+      //    insättning i std::map utan en manuell loop!
+     
       // copy words into a map<string, int>
       std::map<std::string, int> words_map;
       transform(words.begin(), words.end(), inserter(words_map, words_map.begin()),
                 [&words] (std::string const& str)
                 {
+                   // KlaAr36: Komplexiteten blir tyvärr O(n*n) då ni
+                   //   för varje ord går igenom alla ord för att
+                   //   räkna antalet förekomster. Det skulle vara
+                   //   effektivare att nyttja std::map::operator[]
+                   //   genom att helt enkelt öka räknaren vid varje
+                   //   insättning (O(n*log(n))
+                   //   Komplexitet och notationen O(n*n) kommer ni
+                   //   att få lära er i senare kurs. Det jag försöker
+                   //   säga ar att implementationen kan bli mer
+                   //   effektiv genom att använda ett annat
+                   //   tillvägagångssätt.
+                  
                    return make_pair(str, std::count(words.begin(), words.end(), str));
                 });
 
       // clear vector
       words.clear();
+
+      // KlaAr36: Komplettering: Orden skrivs inte ut med rätt
+      //   kolumnbredd. Varje kolumn ska vara lika bred med bredden
+      //   satt enligt längsta ordet.
 
       // copy words + count from map to vector
       transform(words_map.begin(), words_map.end(), back_inserter(words), 
@@ -145,6 +189,15 @@ int main(int argc, char* argv[])
    } 
    else if (argv[2][1] == 'f')
    {
+      // KlaAr36: Den här lösningsgången blev krånglig, men visar prov
+      //   på god problemlösningsförmåga och mycket användning av STL!
+      //   Bra!!
+      //
+      //   I föregående fall (flagga 'a') har ni redan frekvensen för
+      //   unika ord i en std::map. Genom att kopiera ut det från
+      //   mappen till en vektor och sedan sortera löser ni problemet
+      //   i mycket färre steg.
+     
       // create vector of unique words
       std::sort(words.begin(), words.end());
       std::vector<std::string> unique_words;
@@ -170,6 +223,7 @@ int main(int argc, char* argv[])
                                                std::pair<std::string,int> r) 
                                             { return l.second > r.second; }); 
 
+      // KlaAr36: Bra!! Även detta är något vi sällan ser att någon får till!
       // print
       std::transform(pairs.begin(), pairs.end(), 
                      std::ostream_iterator<std::string>(std::cout, "\n" ), 
