@@ -59,7 +59,7 @@ std::string clean_word(std::string & str)
    //   räcker inte att näst sista är ett '\''
    
    // adjust index for last letter in case it ends with 's
-   if (str.at(last-1) == '\'')
+   if (str.substr(last-1, 2) == "\'s")
    {
       last -= 2;
    }
@@ -102,8 +102,7 @@ int main(int argc, char* argv[])
    }
 
    // open file
-   std::ifstream in_stream; // KlaAr36: Filen går att öppna direkt i konstruktorn
-   in_stream.open(argv[1]);
+   std::ifstream in_stream(argv[1]); // KlaAr36: Filen går att öppna direkt i konstruktorn
    if (!in_stream.is_open())
    {
       print_error("Error: Invalid file name.");
@@ -151,9 +150,10 @@ int main(int argc, char* argv[])
       //    insättning i std::map utan en manuell loop!
      
       // copy words into a map<string, int>
+      int longest_word_size{};
       std::map<std::string, int> words_map;
       transform(words.begin(), words.end(), inserter(words_map, words_map.begin()),
-                [&words] (std::string const& str)
+                [&words, &longest_word_size] (std::string const& str)
                 {
                    // KlaAr36: Komplexiteten blir tyvärr O(n*n) då ni
                    //   för varje ord går igenom alla ord för att
@@ -166,27 +166,37 @@ int main(int argc, char* argv[])
                    //   säga ar att implementationen kan bli mer
                    //   effektiv genom att använda ett annat
                    //   tillvägagångssätt.
-                  
+                   //int word_length{ std::count_if(str.begin(), str.end(),
+                   //[](unsigned char c) { return std::isalpha(c); })};
+                   long int word_length{std::distance( str.begin(), str.end() )};
+                   if( word_length > longest_word_size )
+                   {
+                      longest_word_size = word_length;
+                   }
                    return make_pair(str, std::count(words.begin(), words.end(), str));
                 });
 
+      
+      
       // clear vector
       words.clear();
 
       // KlaAr36: Komplettering: Orden skrivs inte ut med rätt
       //   kolumnbredd. Varje kolumn ska vara lika bred med bredden
-      //   satt enligt längsta ordet.
+      //   satt enligt längsta ordet. - KLART
 
       // copy words + count from map to vector
+      
       transform(words_map.begin(), words_map.end(), back_inserter(words), 
-                [&words_map] (std::pair<std::string, int> const& p) 
+                [&words_map, &longest_word_size] (std::pair<std::string, int> const& p) 
                 {
-                   return p.first + " " + std::to_string(p.second);
+                   std::string spaces(longest_word_size - std::distance( p.first.begin(), p.first.end() ) + 1, ' ');
+                   return p.first + spaces + std::to_string(p.second);
                 });
 
       // print vector with words + count
       std::copy(words.begin(), words.end(), 
-                std::ostream_iterator<std::string>(std::cout, "\n"));
+                std::ostream_iterator<std::string>(std::cout << std::setw(longest_word_size), "\n"));
    } 
    else if (argv[2][1] == 'f')
    {
