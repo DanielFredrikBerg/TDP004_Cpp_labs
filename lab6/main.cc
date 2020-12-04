@@ -102,7 +102,7 @@ int main(int argc, char* argv[])
    }
 
    // open file
-   std::ifstream in_stream(argv[1]); // KlaAr36: Filen går att öppna direkt i konstruktorn
+   std::ifstream in_stream(argv[1]); // KlaAr36: Filen går att öppna direkt i konstruktorn - KLART
    if (!in_stream.is_open())
    {
       print_error("Error: Invalid file name.");
@@ -133,10 +133,16 @@ int main(int argc, char* argv[])
                             [](std::string const& str) {return !is_valid(str);});
    words.erase(it, words.end());
 
+   int longest_word_size{};
    // convert valid words to lowercase
    std::transform(words.begin(), words.end(), words.begin(), 
-                  [](std::string & str) 
+                  [&longest_word_size](std::string & str) 
                   { 
+                     long int word_length{std::distance( str.begin(), str.end() )};
+                     if( word_length > longest_word_size )
+                     {
+                        longest_word_size = word_length;
+                     }
                      std::transform(str.begin(), str.end(), str.begin(), 
                                     [](char c){return std::tolower(c);});
                      return str;
@@ -150,10 +156,10 @@ int main(int argc, char* argv[])
       //    insättning i std::map utan en manuell loop!
      
       // copy words into a map<string, int>
-      int longest_word_size{};
+      
       std::map<std::string, int> words_map;
       transform(words.begin(), words.end(), inserter(words_map, words_map.begin()),
-                [&words, &longest_word_size] (std::string const& str)
+                [&words] (std::string const& str)
                 {
                    // KlaAr36: Komplexiteten blir tyvärr O(n*n) då ni
                    //   för varje ord går igenom alla ord för att
@@ -168,11 +174,7 @@ int main(int argc, char* argv[])
                    //   tillvägagångssätt.
                    //int word_length{ std::count_if(str.begin(), str.end(),
                    //[](unsigned char c) { return std::isalpha(c); })};
-                   long int word_length{std::distance( str.begin(), str.end() )};
-                   if( word_length > longest_word_size )
-                   {
-                      longest_word_size = word_length;
-                   }
+                   
                    return make_pair(str, std::count(words.begin(), words.end(), str));
                 });
 
@@ -237,9 +239,12 @@ int main(int argc, char* argv[])
       // KlaAr36: Bra!! Även detta är något vi sällan ser att någon får till!
       // print
       std::transform(pairs.begin(), pairs.end(), 
-                     std::ostream_iterator<std::string>(std::cout, "\n" ), 
-                     [](std::pair<std::string, int> & p) 
-                     { return p.first + " " + std::to_string(p.second); } );
+                     std::ostream_iterator<std::string>(std::cout << std::setw(longest_word_size), "\n" ), 
+                     [&longest_word_size](std::pair<std::string, int> & p) 
+                     { 
+                        std::string spaces(longest_word_size - std::distance( p.first.begin(), p.first.end() ) + 1, ' ');
+                        return p.first + spaces + std::to_string(p.second); 
+                     } );
    } 
    else if (argv[2][1] == 'o')
    {
