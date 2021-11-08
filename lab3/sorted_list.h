@@ -29,12 +29,8 @@ public:
 
 private:
 
-  // Kommentar: Hade ni andvänt en struct så hade medlemmarna
-  // varit public by default.
-  class Node
-  {
-  private:
-      
+  struct Node
+  {      
   public:
     int value;
     Node* next;

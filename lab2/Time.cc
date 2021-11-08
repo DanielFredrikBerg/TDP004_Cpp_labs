@@ -176,10 +176,10 @@ std::ostream& operator<<(std::ostream & out_stream, Time const& time)
 // KlaAr36: Bra! Snyggt! Rätt tänk och nära referenslösning. 
 std::istream& operator>>(std::istream & in_stream, Time & time)
 {
-  int hour_temp;
-  int minute_temp;
-  int second_temp;
-  char semicolon;
+   int hour_temp{};
+   int minute_temp{};
+   int second_temp{};
+   char semicolon{};
   
   in_stream >> hour_temp >> semicolon 
             >> minute_temp >> semicolon 
@@ -200,8 +200,6 @@ std::istream& operator>>(std::istream & in_stream, Time & time)
   return in_stream;
 }
 
-
-
 int Time::get_hour() const {return hour;}
 int Time::get_minute() const {return minute;}
 int Time::get_second() const {return second;}
@@ -209,6 +207,10 @@ int Time::get_second() const {return second;}
 int Time::time_to_sec() const
 {
   return hour * 3600 + minute * 60 + second; 
+}
+
+int mod(int x, int m) {
+    return (x%m + m)%m;
 }
 
 void Time::set_time(int total_seconds)
@@ -219,7 +221,7 @@ void Time::set_time(int total_seconds)
 
   if (total_seconds < 0)
   {
-// KlaAr36: Bra uttänkt!
+    total_seconds = mod(total_seconds, sec_per_day);
     total_seconds += (1 + total_seconds / sec_per_day) * sec_per_day;
   }
   if (total_seconds >= sec_per_day)

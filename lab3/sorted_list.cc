@@ -20,7 +20,7 @@ Sorted_List::Sorted_List()
  * insert gör en allokering av data. Helst vill man att den som allokerar
  * minnet också har som ansvar att ta bort det.
 */
-
+ 
 /* Kommentar för kopieringstilldelning:
  * Kan vara bra att kolla så att användaren inte skickar in this som
  * parameter vid kopiering. List l1{1,2,3} l1 = l1. 
@@ -50,17 +50,16 @@ Sorted_List::Sorted_List(Sorted_List const& other_list)
       return;
    }
 
-   head = new Node{other_list.head -> value, nullptr};
+   head = new Node{other_list.head->value, nullptr};
 
    Node* new_list_ptr{head};
-   Node* other_ptr{other_list.head -> next};
+   Node* other_ptr{other_list.head->next};
    
    while (other_ptr)
    {
-      new_list_ptr -> next = new Node{other_ptr -> value, nullptr};
-      new_list_ptr = new_list_ptr -> next;
-      other_ptr = other_ptr -> next;
-
+      new_list_ptr->next = new Node{other_ptr->value, nullptr};
+      new_list_ptr = new_list_ptr->next;
+      other_ptr = other_ptr->next;
    }
 
    size_var = other_list.size_var;
@@ -101,13 +100,13 @@ bool Sorted_List::is_sorted() const
   {
     return true;
   }
-  while (node_ptr -> next != nullptr)
+  while (node_ptr->next != nullptr)
   {
-    if (node_ptr -> value > node_ptr -> next -> value)
+    if (node_ptr->value > node_ptr->next->value)
     {
       return false;
     }
-    node_ptr = node_ptr -> next;
+    node_ptr = node_ptr->next;
   }
   return true;
 }
@@ -120,13 +119,13 @@ int Sorted_List::size() const
 
 void Sorted_List::insert(int const value)
 {
-  if (is_empty() || head -> value >= value)
+  if (is_empty() || head->value >= value)
   {
     head = new Node{value, head};
   }
   else
   {
-    head -> insert(value);
+    head->insert(value);
   }
   ++size_var;
 }
@@ -142,42 +141,42 @@ void Sorted_List::remove(int const value)
   Node* node_ptr{head};
   if (first_value() == value)
   {
-    head = head -> next;
+    head = head->next;
     delete node_ptr;
     --size_var;
     return;
   }  
 
-  while (node_ptr -> next) 
+  while (node_ptr->next) 
   {
-    if (node_ptr -> next -> value == value)
+    if (node_ptr->next->value == value)
     {
-      Node* node_rem{node_ptr -> next};
-      node_ptr -> next = node_ptr -> next -> next;
+      Node* node_rem{node_ptr->next};
+      node_ptr->next = node_ptr->next->next;
       delete node_rem;
       --size_var;
       return;
     }
-    node_ptr = node_ptr -> next;
+    node_ptr = node_ptr->next;
   }
 }
 
 
 int Sorted_List::first_value() const
 {
-  return head -> value;
+  return head->value;
 }
 
 
 void Sorted_List::Node::insert(int const value)
 {
-  if (next == nullptr || value <= next -> value)
+  if (next == nullptr || value <= next->value)
   {
     next = new Node{value, next};
   }
   else
   {
-    next -> insert(value);
+    next->insert(value);
   }
 }
 
@@ -188,12 +187,12 @@ std::string Sorted_List::to_string() const
   Node* node_ptr{head};
   while (node_ptr != nullptr)
   {
-    str += std::to_string(node_ptr -> value);
-    if (node_ptr -> next != nullptr)
+    str += std::to_string(node_ptr->value);
+    if (node_ptr->next != nullptr)
     {
       str += ", ";
     }
-    node_ptr = node_ptr -> next;
+    node_ptr = node_ptr->next;
   }
   str += "]";
   return str;
@@ -213,7 +212,7 @@ void Sorted_List::clear()
   Node* node_ptr{head};
   while (head != nullptr)
   {
-    head = head -> next;
+    head = head->next;
     delete node_ptr;
     node_ptr = head;
   }
@@ -226,10 +225,6 @@ void Sorted_List::clear()
 //            data så kommer den att ta bort detta vid sin död.
 Sorted_List& Sorted_List::operator=(Sorted_List && other)
 {
-  if (head != nullptr)
-  {
-    clear();
-  }
   head = other.head;
   other.head = nullptr;
 

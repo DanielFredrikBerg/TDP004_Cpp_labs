@@ -31,31 +31,32 @@ int main()
   cout << "\nSkriv in fem heltal: ";
   cin >> integer;
   cout << "Du skrev in talen: " << integer << ", ";
-  cin >> integer;
-  cout << integer << ", ";
-  cin >> integer;
-  cout << integer << ", ";
-  cin >> integer;
-  cout << integer << ", ";
-  cin >> integer;
-  cout << integer << endl;
+  for(int i{0}; i < 4; i++) {
+     cin >> integer;
+     if(i == 3){
+        cout << integer << endl;
+     } else {
+        cout << integer << ", ";
+     }
+  }
+ 
   cin.ignore(100, '\n');
 
   cout << "\nSkriv in ett flyttal: ";
   cin >> double_num;
-  cout << "Du skrev in flyttalet: " << fixed << setprecision(3)
+  cout << "Du skrev in flyttalet: " << fixed << setprecision(3) //antal decimaler
        << double_num << endl;
   cin.ignore(100, '\n');
 
   cout << "\nSkriv in ett heltal och ett flyttal: ";
   cin >> integer >> double_num;
-  cout << "Du skrev in heltalet:" << setw(9) << integer
+  cout << "Du skrev in heltalet:" << setw(9) << integer //setw(x) total width
        << "\nDu skrev in flyttalet:" << setw(8) << double_num << endl;
   cin.ignore(100, '\n');
 
   cout << "\nSkriv in ett flyttal och ett heltal: ";
   cin >> double_num >> integer;
-  cout << "Du skrev in heltalet:" << setw(9) << setfill('-') << integer
+  cout << "Du skrev in heltalet:" << setw(9) << setfill('-') << integer //fyller vidden
        << "\nDu skrev in flyttalet:" << setw(8) << double_num << endl;
   cin.ignore(100, '\n');
 
