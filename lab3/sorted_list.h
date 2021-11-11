@@ -30,10 +30,9 @@ public:
   
 private:
 
-  // Kommentar: Hade ni använt en struct så hade medlemmarna
-  // varit public by default.
   struct Node
-  {
+  {      
+  public:
     int value;
     Node* next;
     void insert(int const value);

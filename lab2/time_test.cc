@@ -58,12 +58,15 @@ TEST_CASE("Checking - operator", "[operator-]")
   Time t4{23, 50, 30};
   Time t5{t1 - 40 * 60};
   Time t6{t3 - 670};
+  Time t7{t3 - 345600};
   REQUIRE( t5.get_hour() == 0 );
   REQUIRE( t5.get_minute() == 20 );
   REQUIRE( t5.get_second() == 00 );
   REQUIRE( t6.get_hour() == 23 );
   REQUIRE( t6.get_minute() == 48 );
   REQUIRE( t6.get_second() == 50 );
+  std::cout << t7.to_string(false) << std::endl;
+  REQUIRE( t7.get_second() == 00 );
 }
 
 // KlaAr36: Bra! Testar även returvärdet.

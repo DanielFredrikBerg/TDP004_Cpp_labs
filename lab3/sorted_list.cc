@@ -20,7 +20,7 @@ Sorted_List::Sorted_List()
  * insert gör en allokering av data. Helst vill man att den som allokerar
  * minnet också har som ansvar att ta bort det.
 */
-
+ 
 /* Kommentar för kopieringstilldelning:
  * Kan vara bra att kolla så att användaren inte skickar in this som
  * parameter vid kopiering. List l1{1,2,3} l1 = l1. 

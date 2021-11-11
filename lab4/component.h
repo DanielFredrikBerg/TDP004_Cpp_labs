@@ -3,6 +3,21 @@
 
 #include <string>
 
+// Komplettering: Alla parametrar av klasstyp ska skickas in som const& om de inte ändras 
+//                och som referenser om de ändras. - KLAR
+
+// Komplettering: Varje subklass ska ha sin egen speciella datamedlem. Det kan framstå som 
+//                att denna 'special value' kan vara i basklassen eftersom att den förekommer 
+//                i alla subklasser men dem används annorlunda och betyder olika saker.
+//                I och med att dem betyder olika saker för olika subklasser ska dem ligga i sin respektive klass.
+//                Detta syftar till 'double value'. - KLAR
+
+// Komplettering: Programmet läcker minne för körningen: ./a.out 200000 10 0.01 24 - KLAR
+
+// Komplettering: Upprepa inte manipulatorer med permanent effekt. - KLAR
+
+// Kommentar: Superbra att ni kör med en stringstream i main::simulate!!! :D :D
+
 struct Connection
 {
   double charge{};
@@ -11,7 +26,7 @@ struct Connection
 class Component
 {
 public:
-  Component(std::string name, double value, \
+  Component(std::string const& name, \
             Connection & positive, Connection & negative);
   virtual ~Component() = default;
   std::string get_name();
@@ -23,7 +38,6 @@ public:
   
 protected:
   std::string name;
-  double value;
   Connection & positive;
   Connection & negative;
 

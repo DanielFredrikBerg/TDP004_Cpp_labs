@@ -1,9 +1,9 @@
 #include "component.h"
 
 
-Component::Component(std::string name, double value,\
+Component::Component(std::string const& name, \
                      Connection & positive, Connection & negative)
-  : name{name}, value{value}, positive{positive}, negative{negative}
+  : name{name}, positive{positive}, negative{negative}
 {}
 
 std::string Component::get_name()
@@ -16,7 +16,7 @@ double Component::calc_voltage()
   return std::abs(positive.charge - negative.charge);
 }
 
-void Component::move_charge(double const charge_flow)
+void Component::move_charge(double charge_flow)
 {
   if (positive.charge > negative.charge)
   {

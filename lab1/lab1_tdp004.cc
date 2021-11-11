@@ -1,5 +1,6 @@
 #include <iomanip>
 #include <iostream>
+#include <string>
 
 // Ser fint ut! Bra jobbat, men jag har några små kompletteringar ni bör fixa.
 
@@ -31,7 +32,11 @@ int main()
   //            Tycker det är ok nu men vill bara att ni ska ha koll
   //            på den punkten i rättningsprotokollet.
   float f_price{-1};
-  cout << "INMATNINGSDEL\n============" << endl;
+  float s_price{-1};
+  float step{-1};
+  float vat{-1};
+  string input{"INMATNINGSDEL"};
+  cout << input << "\n" << setfill('=') << setw(input.size()) << '='  << endl; //fill f�re setw, m�ste vara n�got efter fill
   while(f_price < 0)
   {
     cout << "Mata in första pris: ";
@@ -41,7 +46,7 @@ int main()
       cout << "FEL: Första pris måste vara minst 0 (noll) kronor" << endl;
     }
   }
-  float s_price{-1};
+
   while(s_price < f_price)
   {
     cout << "Mata in sista pris: ";
@@ -54,7 +59,7 @@ int main()
   }
   // Komplettering: Varför adderar ni 0.000001? Varför plus? Kanske minus?
   //                Hur vet ni om ni får 0.00001 för mycket eller för lite?
-  float step{-1};
+
   while(step < 0.01)
   {
     cout << "Mata in steglängd: ";
@@ -64,7 +69,7 @@ int main()
       cout << "FEL: steglängd måste vara minst 0.01" << endl;
     }
   }
-  float vat{-1};
+
   while(vat < 0)
   {
     cout << "Mata in momsprocent: ";

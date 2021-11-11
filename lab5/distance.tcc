@@ -1,6 +1,6 @@
 template <typename T>
-Distance<T>::Distance(T const& center)
-  : center{center}
+Distance<T>::Distance(T const& center_)
+  : center{center_}
 {}
 
 template <typename T>

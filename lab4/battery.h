@@ -6,12 +6,14 @@
 class Battery : public Component
 {
 public:
-  Battery(std::string name, double value, \
+  Battery(std::string const& name, double value, \
           Connection & positive, Connection & negative);
+
   void update(double interval) override;
   double calc_current() override;
 
 private:
+	double charge;
 };
 
 
