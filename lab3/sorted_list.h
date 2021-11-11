@@ -27,22 +27,22 @@ public:
   Sorted_List& operator=(Sorted_List const& other);
   Sorted_List& operator=(Sorted_List && other);
 
+  
 private:
 
-  // Kommentar: Hade ni andvänt en struct så hade medlemmarna
+  // Kommentar: Hade ni använt en struct så hade medlemmarna
   // varit public by default.
-  class Node
+  struct Node
   {
-  private:
-      
-  public:
     int value;
     Node* next;
     void insert(int const value);
+    Node* remove_node();
   };
   Node* head;
   int size_var;
-   
+
+  
   
    
 };
